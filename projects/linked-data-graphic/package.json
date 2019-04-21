@@ -1,0 +1,30 @@
+{
+  "name": "linked-data-graphic",
+  "version": "0.0.1",
+  "description": "Linked Data Graphic Component for Angular",
+  "peerDependencies": {
+    "@angular/common": "^7.2.0",
+    "@angular/core": "^7.2.0"
+  },
+  "keywords": [
+    "angular",
+    "semantic web",
+    "ontology",
+    "rdf",
+    "data web",
+    "linked data",
+    "network",
+    "visualization",
+    "components"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chigix/linked-data-graphic.git"
+  },
+  "license": "MIT",
+  "author": "Richard Lea <https://github.com/chigix>",
+  "homepage": "https://github.com/chigix/linked-data-graphic#readme",
+  "bugs": {
+    "url": "https://github.com/chigix/linked-data-graphic/issues"
+  }
+}
