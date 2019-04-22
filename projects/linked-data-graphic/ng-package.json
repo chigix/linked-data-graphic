@@ -3,5 +3,9 @@
   "dest": "../../dist/linked-data-graphic",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "tslib",
+    "d3-.+"
+  ]
 }
