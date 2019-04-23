@@ -1,3 +1,8 @@
+@import './styles/theme.scss';
+@import 'app/modules/navigation/navigation.component.scss-theme.scss';
+
+@include navigation-component-theme($chigix-theme);
+
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }

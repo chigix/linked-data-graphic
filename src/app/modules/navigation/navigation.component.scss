@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 .sidenav-container {
   height: 100%;
 }
@@ -18,4 +20,14 @@
 
 div.content {
   margin: 20px;
+}
+
+.docs-logo {
+  height: 26px;
+  margin: 0 4px 3px 0;
+  vertical-align: middle;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
 }

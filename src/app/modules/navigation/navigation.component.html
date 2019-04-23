@@ -1,21 +1,41 @@
+<mat-toolbar color="primary" *ngIf="!(isHandset$ | async)">
+  <span>Linked Data Graphic Component</span>
+  <span class="fill-remaining-space"></span>
+  <a mat-button href="https://github.com/chigix/linked-data-graphic"
+    aria-label="GitHub Repository">
+    <img alt="angular" class="docs-logo"
+      src="./assets/github-circle-white-transparent.svg">
+    GitHub
+  </a>
+</mat-toolbar>
+
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+    [fixedTopGap]="(isHandset$ | async) ? 0 : 64"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
-    <mat-toolbar>Menu</mat-toolbar>
+    <mat-toolbar *ngIf="isHandset$ | async">Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
+      <a mat-list-item routerLink="/" routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">About</a>
+      <a mat-list-item routerLink="/quickstart" routerLinkActive="active">
+        Getting Started</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar color="primary" *ngIf="isHandset$ | async">
       <button type="button" aria-label="Toggle sidenav" mat-icon-button
-        (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+        (click)="drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Linked Data Graphic Component</span>
+      <span class="fill-remaining-space"></span>
+      <a mat-button href="https://github.com/chigix/linked-data-graphic"
+        aria-label="GitHub Repository">
+        <img alt="angular" class="docs-logo"
+          src="./assets/github-circle-white-transparent.svg">
+        GitHub
+      </a>
     </mat-toolbar>
     <div class="content">
       <ng-content></ng-content>
