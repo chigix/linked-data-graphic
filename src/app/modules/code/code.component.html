@@ -1,0 +1,12 @@
+<!-- Content projection is used to get the content HTML provided to this component -->
+<div #content style="display: none">
+  <ng-content></ng-content>
+</div>
+<pre class="prettyprint lang-{{language}}">
+  <button *ngIf="!hideCopy" class="material-icons copy-button no-print"
+    title="Copy code snippet" [attr.aria-label]="ariaLabel"
+    (click)="doCopy()">
+    <span aria-hidden="true">content_copy</span>
+  </button>
+  <code class="animated fadeIn" #codeContainer></code>
+</pre>
