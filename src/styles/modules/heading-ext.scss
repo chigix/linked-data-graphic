@@ -1,0 +1,21 @@
+@mixin mat-heading-typography($config, $selector: '.mat-typography') {
+  #{$selector} {
+    h1, h2, h3, h4, h5, h6 {
+
+      .header-link {
+        // color: mat-color($mat-grey);
+        color: map_get($mat-grey, 500);
+        margin: 0 4px;
+        text-decoration: none;
+        user-select: none;
+        visibility: hidden;
+        display: inline-block;
+        vertical-align: text-top;
+      }
+
+      &:hover .header-link {
+        visibility: visible;
+      }
+    }
+  }
+}

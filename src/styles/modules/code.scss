@@ -1,0 +1,19 @@
+// Adds the code typography styles extension, based on a config.
+@mixin mat-code-typography($config, $selector: '.mat-typography') {
+  $code-font: "Droid Sans Mono", monospace;
+  .mat-code, #{$selector} code {
+    font-family: $code-font;
+    font-size: 90%;
+  }
+}
+
+// Theme styles that only apply to the fashion appearance of the
+// computer code texts.
+@mixin mat-code-theme($theme, $selector: '.mat-typography') {
+  // $primary: map-get($theme, foreground);
+  $primary: map-get($theme, primary);
+
+  .mat-code, #{$selector} code {
+    color: mat-color($primary, darker);
+  }
+}
