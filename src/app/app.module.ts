@@ -18,12 +18,14 @@ import {
 } from '@angular/material';
 
 import { HomeComponent } from './pages/home/home.component';
+import { DataProtocolComponent } from './pages/data-protocol/data-protocol.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavigationComponent,
+    DataProtocolComponent,
   ],
   imports: [
     BrowserModule,

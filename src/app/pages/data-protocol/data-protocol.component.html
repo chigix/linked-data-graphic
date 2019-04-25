@@ -1,0 +1,36 @@
+<h1 class="mat-headline">About the Data Protocol (Upon D3-Force)</h1>
+
+<section class="mat-typography">
+  <p>Because current implementation is based upon
+    <a href="https://github.com/d3/d3-force#simulation">d3-force simulation</a>,
+    D3-force's <a href="https://github.com/d3/d3-force#simulation_nodes">Node</a>
+    and <a href="https://github.com/d3/d3-force#link_links">Link</a>
+    data protocol is natively supported by this component.
+  </p>
+</section>
+
+<section class="mat-typography">
+  <h2>About Nodes</h2>
+  <p>Each node is an object and the properties used by simulation could be
+    described in TypeScript and look something like below:
+  </p>
+
+  <app-code [language]="'typescript'">
+    {{ codes.nodeStructure }}
+  </app-code>
+
+  <p>, where <code>x</code>, <code>y</code>, <code>vx</code>, <code>vy</code>
+    is calculated using
+    <a href="https://github.com/d3/d3-force#simulation">d3-force simulation</a>,
+    which is not need to be defined in user's development.</p>
+</section>
+<section class="mat-typography">
+  <h2>About Links</h2>
+
+  <p>Each link is an object with the following main properties:
+  </p>
+
+  <app-code [language]="'typescript'">
+    {{ codes.linkStructure }}
+  </app-code>
+</section>
