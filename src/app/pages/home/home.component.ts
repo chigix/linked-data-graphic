@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit {
   @ViewChild(LinkedDataGraphicComponent)
   ldCanvas: LinkedDataGraphicComponent;
 
-  private ldData: D3Data = {
+  ldData: D3Data = {
     nodes: [
       { labels: ['8階へ戻る'], id: '1', properties: {} },
       { labels: ['8階から悲鳴が聞こえた'], id: '2', properties: {} },
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
     ],
   };
 
-  private thorinAndCompany = {
+  thorinAndCompany = {
     nodes: [
       { labels: ['The Hall at Bag-End'], id: '1' },
       { labels: ['The Misty Mountains'], id: '2' },
@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
     ],
   };
 
-  private codes = {
+  codes = {
     installInTs: `
     import { LinkedDataGraphicModule } from 'linked-data-graphic';
     ...

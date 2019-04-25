@@ -48,6 +48,10 @@ typings/
 !.vscode/extensions.json
 .history/*
 
+# Firebase
+/.firebaserc
+.firebase/
+
 # misc
 /.sass-cache
 /connect.lock
