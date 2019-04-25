@@ -1,4 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { LinkedDataGraphicModule } from 'linked-data-graphic';
+
+import {
+  MatIconModule,
+} from '@angular/material';
 
 import { HomeComponent } from './home.component';
 
@@ -8,9 +13,13 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeComponent ]
+      imports: [
+        LinkedDataGraphicModule,
+        MatIconModule,
+      ],
+      declarations: [HomeComponent],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

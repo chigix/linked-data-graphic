@@ -1,3 +1,67 @@
-<h1>Linked Data Graphic</h1>
+<h1 class="mat-headline">Linked Data Graphic</h1>
 
-<p>Linked Data Graphic and Visualization Components for Angular</p>
+<p class="mat-body-strong">Linked Data Graphic and Visualization Components
+  for Angular</p>
+
+<chigix-ld-graphic [data]="ldData"></chigix-ld-graphic>
+
+<section class="mat-typography">
+  <h2 id="installation">
+    Installation
+    <a title="Link to this heading" class="header-link" aria-hidden="true"
+      href="/#installation">
+      <mat-icon aria-label="link icon">link</mat-icon>
+    </a>
+  </h2>
+
+  <p>Initially, this library is designed as an Angular Component and released as
+    an npm package, for which
+    <a href="https://angular.io/guide/quickstart">Angular Development Environment</a>
+    and an
+    <a href="https://docs.npmjs.com/about-npm">npm package manager</a>
+    is prerequisites.</p>
+
+  <app-code [language]="'bash'">
+    npm install linked-data-graphic
+  </app-code>
+
+</section>
+
+<section class="mat-typography">
+  <h2 id="getting-started">
+    Getting Started: Thorin and Company Path
+    <a title="Link to this heading" class="header-link" aria-hidden="true"
+      href="/#getting-started">
+      <mat-icon aria-label="link icon">link</mat-icon>
+    </a>
+  </h2>
+
+  <p>Open the module file (e.g <code>app.module.ts</code>) and import the
+    <code>LinkedDataGraphicModule</code> symbol from <code>linked-data-graphic</code>
+    library. Then add <code>LinkedDataGraphicModule</code> to the <code>@NgModule</code>
+    metadata's <code>imports</code> array. </p>
+
+  <app-code [language]="'javascript'">
+    {{ codes.installInTs }}
+  </app-code>
+
+  <p>Prepare a simple list of linked data with nodes and relations information
+    in your application component(e.g <code>app.component.ts</code>) as a property
+    for binding into <code>linked-data-graphic</code> component later.
+  </p>
+
+  <app-code [language]="'javascript'">
+    {{ codes.bindingProperty }}
+  </app-code>
+
+  <p>Add a <code>&lt;chigix-ld-graphic&gt;</code> element,
+    the <code>linked-data-graphic</code> component selector, into your
+    application's template, where your linked data is intended to be shown.</p>
+  <app-code [language]="'javascript'">
+    {{ codes.componentUsageHtml }}
+  </app-code>
+
+  Now the graphic should be rendered like this:
+</section>
+
+<chigix-ld-graphic [data]="thorinAndCompany"></chigix-ld-graphic>
