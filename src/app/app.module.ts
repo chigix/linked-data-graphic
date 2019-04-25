@@ -7,6 +7,7 @@ import { LinkedDataGraphicModule } from 'linked-data-graphic';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NavigationComponent } from './modules/navigation/navigation.component';
+import { CodeModule } from './modules/code/code.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import {
   MatToolbarModule,
@@ -28,6 +29,7 @@ import { HomeComponent } from './pages/home/home.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    CodeModule,
     LinkedDataGraphicModule,
     LayoutModule,
     MatToolbarModule,

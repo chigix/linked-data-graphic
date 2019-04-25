@@ -50,7 +50,7 @@ export class CodeComponent implements AfterViewInit {
   codeContainer: ElementRef;
 
   @ViewChild('content')
-  content: ElementRef;
+  content: ElementRef<HTMLDivElement>;
 
   constructor(
     private pretty: PrettyPrinterService,
@@ -58,7 +58,10 @@ export class CodeComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    this.code = this.content.nativeElement.innerHTML;
+    const expectingTextNode = this.content.nativeElement.childNodes[0];
+    this.code = expectingTextNode ?
+      expectingTextNode.nodeValue
+      : this.content.nativeElement.innerHTML;
     if (this.code) {
       this.formatDisplayedCode();
     }
