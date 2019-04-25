@@ -1,6 +1,6 @@
 // Adds the code typography styles extension, based on a config.
 @mixin mat-code-typography($config, $selector: '.mat-typography') {
-  $code-font: "Droid Sans Mono", monospace;
+  $code-font: "Verdana", "Droid Sans Mono", monospace;
   .mat-code, #{$selector} code {
     font-family: $code-font;
     font-size: 90%;
@@ -13,7 +13,12 @@
   // $primary: map-get($theme, foreground);
   $primary: map-get($theme, primary);
 
-  .mat-code, #{$selector} code {
+  /* Inline code */
+  :not(pre) > .mat-code,
+  :not(pre) > code {
+    padding: .1em;
+    border-radius: .3em;
+    white-space: normal;
     color: mat-color($primary, darker);
   }
 }
