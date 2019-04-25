@@ -4,7 +4,6 @@ import { LinkedDataGraphicComponent, D3Data } from 'linked-data-graphic';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
 
