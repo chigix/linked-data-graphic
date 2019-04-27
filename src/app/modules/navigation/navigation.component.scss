@@ -2,6 +2,7 @@
 
 .sidenav-container {
   height: 100%;
+  z-index: 1;
 }
 
 .sidenav {
@@ -13,13 +14,17 @@
 }
 
 .mat-toolbar.mat-primary {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 1;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  box-shadow: 0 2px 5px 0 rgba($color: #000000, $alpha: 0.3);
 }
 
-div.content {
-  margin: 20px;
+main.content {
+  margin: auto;
+  padding: 80px 3rem 1rem;
 }
 
 .docs-logo {
