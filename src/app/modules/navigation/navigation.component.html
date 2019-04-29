@@ -16,8 +16,8 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
     <mat-toolbar *ngIf="isHandset$ | async">Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/data-protocol" routerLinkActive="active">About</a>
-      <a mat-list-item routerLink="/" routerLinkActive="active"
+      <a mat-list-item [routerLink]="['/data-protocol']" routerLinkActive="active">About</a>
+      <a mat-list-item [routerLink]="['/']" routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }">
         Getting Started</a>
     </mat-nav-list>
