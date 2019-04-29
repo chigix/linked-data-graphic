@@ -29,12 +29,6 @@
   }
 }
 
-// TERMINAL / SHELL TEXT STYLES
-
-:host[language=sh], :host[language=bash] {
-  background-color: $darkgray;
-}
-
 header {
   background-color: $accentblue;
   border-radius: 5px 5px 0 0;
@@ -247,5 +241,15 @@ ol.linenums {
 
   .token.entity {
     cursor: help;
+  }
+}
+
+// TERMINAL / SHELL TEXT STYLES
+
+:host[language=sh], :host[language=bash] {
+  background-color: $darkgray;
+  code {
+    color: $codegreen;
+    text-shadow: none;
   }
 }
