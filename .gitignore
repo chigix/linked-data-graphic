@@ -1,12 +1,5 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
 # compiled output
 /dist
 /tmp
@@ -14,22 +7,12 @@ yarn-error.log*
 # Only exists if Bazel was run
 /bazel-out
 
-# Coverage directory used by tools like istanbul
-coverage
-
-# Dependency directories
-node_modules/
-jspm_packages/
+# dependencies
+/node_modules
 
 # profiling files
-chrome-profiler-events.json
-speed-measure-plugin.json
-
-# TypeScript v1 declaration files
-typings/
-
-# Optional npm cache directory
-.npm
+chrome-profiler-events*.json
+speed-measure-plugin*.json
 
 # IDEs and editors
 /.idea
@@ -55,6 +38,12 @@ typings/
 # misc
 /.sass-cache
 /connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
 
 # System Files
 .DS_Store

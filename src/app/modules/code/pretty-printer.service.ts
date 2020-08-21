@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { share, map, first } from 'rxjs/operators';
-import { PrismJs } from './types';
+import * as prismjs from 'prismjs';
 
 @Injectable()
 export class PrettyPrinterService {
 
-  private printer: Observable<PrismJs>;
+  private printer: Observable<typeof prismjs>;
 
   constructor() {
+    // TODO: Refactor needed
     this.printer = from(import('prismjs')).pipe(share());
   }
 

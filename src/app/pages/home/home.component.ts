@@ -5,7 +5,7 @@ import { LinkedDataGraphicComponent, D3Data } from 'linked-data-graphic';
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
   @ViewChild(LinkedDataGraphicComponent)
   ldCanvas: LinkedDataGraphicComponent;
@@ -78,8 +78,5 @@ export class HomeComponent implements OnInit {
   };
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

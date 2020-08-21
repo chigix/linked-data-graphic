@@ -15,17 +15,17 @@ import { LinkedDataGraphic, D3Data } from './chart-generator';
 })
 export class LinkedDataGraphicComponent implements OnInit {
 
-  @ViewChild('mainCanvas')
+  @ViewChild('mainCanvas', { static: true })
   mainCanvas: ElementRef<SVGSVGElement>;
 
-  @ViewChild('infoPanel')
+  @ViewChild('infoPanel', { static: true })
   infoPanel: ElementRef<HTMLDivElement>;
 
   @Input() private data: D3Data;
 
   constructor() { }
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     const graph = await LinkedDataGraphic(
       this.mainCanvas.nativeElement,
       this.infoPanel.nativeElement,
