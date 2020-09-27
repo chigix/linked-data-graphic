@@ -1,0 +1,69 @@
+<svg #mainCanvas class="neo4jd3-graph mainCanvas"
+    [attr.viewBox]="canvasViewBox.minX
+                  + ' ' + canvasViewBox.minY
+                  + ' ' + canvasViewBox.width
+                  + ' ' + canvasViewBox.height">
+  <g class="relationships">
+    <g *ngFor="let rel of d3Graph.relationships" class="relationship"
+      [attr.transform]="'translate(' + rel.source.x + ',' + rel.source.y
+                        +') rotate(' + rel.rotate + ')'">
+      <text chigixBoxSizeListener [listenValue]="rel.pathDrawn.A1.x"
+        (boxSize)="rel.textBoxSize=$event"
+        class="text" fill="#000000" font-size="8px" pointer-events="none"
+        text-anchor="middle"
+        [attr.transform]="'translate('
+            + rel.textTranslate.x + ',' + rel.textTranslate.y
+            + ') rotate('
+              + ((rel.rotate > 90 && rel.rotate < 270 )? 180:0)
+            + ')'">
+        {{ rel.type }}
+      </text>
+      <path class="outline" fill="#a5abb6" stroke="none"
+          [attr.d]="'M ' + rel.pathDrawn.A1.x + ' ' + rel.pathDrawn.A1.y
+          + ' L ' + rel.pathDrawn.B1.x + ' ' + rel.pathDrawn.B1.y
+          + ' L ' + rel.pathDrawn.C1.x + ' ' + rel.pathDrawn.C1.y
+          + ' L ' + rel.pathDrawn.D1.x + ' ' + rel.pathDrawn.D1.y
+          + ' Z'
+          + ' M ' + rel.pathDrawn.A2.x + ' ' + rel.pathDrawn.A2.y
+          + ' L ' + rel.pathDrawn.B2.x + ' ' + rel.pathDrawn.B2.y
+          + ' L ' + rel.pathDrawn.C2.x + ' ' + rel.pathDrawn.C2.y
+          + ' L ' + rel.pathDrawn.D2.x + ' ' + rel.pathDrawn.D2.y
+          + ' L ' + rel.pathDrawn.E2.x + ' ' + rel.pathDrawn.E2.y
+          + ' L ' + rel.pathDrawn.F2.x + ' ' + rel.pathDrawn.F2.y
+          + ' L ' + rel.pathDrawn.G2.x + ' ' + rel.pathDrawn.G2.y
+          + ' Z'"></path>
+      <path class="overlay"
+          [attr.d]="'M ' + rel.pathDrawn.A3.x + ' ' + rel.pathDrawn.A3.y
+          + ' L ' + rel.pathDrawn.B3.x + ' ' + rel.pathDrawn.B3.y
+          + ' L ' + rel.pathDrawn.C3.x + ' ' + rel.pathDrawn.C3.y
+          + ' L ' + rel.pathDrawn.D3.x + ' ' + rel.pathDrawn.D3.y
+          + ' Z'"></path>
+    </g>
+  </g>
+  <g class="nodes">
+    <g cdkDrag chigixLongPress *ngFor="let node of d3Graph.nodes" class="node"
+      [class.node-highlighted]="highlightChecker(node)"
+      [cdkDragFreeDragPosition]="{ x: node.translate.x, y: node.translate.y }"
+      (cdkDragStarted)="onNodeDragStart(node);node.controlledByDragging=true"
+      (cdkDragEnded)="simulation.alphaTarget(0)"
+      (cdkDragMoved)="onNodeDragging($event, node)"
+      (longPressing)="onNodeDragStart(node);node.isLongPressing=true;node.fx=node.x;node.fy=node.y"
+      (click)="onNodeClick($event, node)">
+      <circle class="ring" [attr.r]="nodeRadius * 1.16">
+        <title> {{ node.labels[0] }} [{{node.id}}] </title>
+      </circle>
+      <circle class="outline" [attr.r]="nodeRadius" [attr.fill]="node.color.fill" [attr.stroke]="node.color.stroke">
+        <title> {{ node.labels[0] }} [{{node.id}}]  </title>
+      </circle>
+      <text class="text" fill="#ffffff" pointer-events="none" y="4px">
+        {{ node.labels.join(' ') }}</text>
+    </g>
+  </g>
+
+  <ng-container *ngIf="debug">
+    <path *ngFor="let node of d3Graph.nodes" class="outline" stroke="green" stroke-width="1"
+            [attr.d]="'M 0 0 '
+            + ' L ' + node.x + ' ' + node.y
+            + ' Z'"></path>
+  </ng-container>
+</svg>

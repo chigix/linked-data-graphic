@@ -1,5 +1,10 @@
 import { SimulationLinkDatum, SimulationNodeDatum } from 'd3-force';
 
+export interface SimpleGraph {
+  nodes: D3Node[];
+  relationships: D3Relationship[];
+}
+
 export interface D3Node extends SimulationNodeDatum {
   labels: string[];
   id: string;

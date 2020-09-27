@@ -1,12 +1,29 @@
 # Linked Data Graphic
 
-Linked Data Graphic and Visualization Components for Angular
+An Angular Module to have a Linked Data Visualization similar to neo4j.
 
 ![preview](https://raw.githubusercontent.com/chigix/linked-data-graphic/master/src/assets/repository-open-graph.png)
 
+## Features
+
+* Compaptible with the Neo4j data format
+* Compatible the D3.js data format: https://github.com/d3/d3-force#link_links , https://github.com/d3/d3-force#simulation_nodes
+* Force simulation.
+* Angular directives for event binding of hovering on nodes and relationshipis.
+* A default info panel component that can be simply connected to the graph.
+* An Angular Service to customize node colors of fill and strokes.
+* Text nodes + Font Awesome icon nodes + SVG image nodes (e.g. using Twitter * Emoji)).
+* Sticky nodes (drag to stick, single click to unstick).
+* Toolbar to operate graph update
+* Highlight nodes on init.
+* Relationship auto-orientation.
+* Zoom, pan, auto fit.
+* More than one relationship between two nodes. (Coming Soon)
+* Markers. (Coming Soon)
+
 ## Dependency
 
-* Angular >= 7.0.0
+* Angular >= 10.0.0
 
 ## Quick Usage
 
@@ -21,14 +38,10 @@ conforming to D3's [node](https://github.com/d3/d3-force#simulation_nodes) and
 [links](https://github.com/d3/d3-force#link_links) structure.
 
 ```html
-<chigix-ld-graphic [data]="ldData"></chigix-ld-graphic>
+<ld-graphic [data]="ldData"></ld-graphic>
 ```
 
-## Build
+## Story
 
-Run `npm run build-release` to build the component library.
-The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `npm run test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+This library is greatly inspired by the neo4j visualization library:
+https://github.com/eisman/neo4jd3

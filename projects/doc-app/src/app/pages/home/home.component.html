@@ -3,7 +3,9 @@
 <p class="mat-body-strong">Linked Data Graphic and Visualization Components
   for Angular</p>
 
-<chigix-ld-graphic [data]="ldData"></chigix-ld-graphic>
+<div style="height: 400px">
+  <chigix-ld-graphic [graph]="ldData" [zoomFit]="true"></chigix-ld-graphic>
+</div>
 
 <section class="mat-typography">
   <h2 id="installation">
@@ -61,7 +63,10 @@
     {{ codes.componentUsageHtml }}
   </app-code>
 
-  Now the graphic should be rendered like this:
+  With the <code>debug</code> directive, the graphic should be rendered like this:
 </section>
 
-<chigix-ld-graphic [data]="thorinAndCompany"></chigix-ld-graphic>
+<div style="height: 400px">
+  <chigix-ld-graphic [graph]="thorinAndCompany" [debug]="true"
+    [highlightChecker]="thorinAndCompanyHighlighter"></chigix-ld-graphic>
+</div>

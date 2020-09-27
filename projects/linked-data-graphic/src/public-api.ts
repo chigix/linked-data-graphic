@@ -4,4 +4,5 @@
 
 export * from './lib/linked-data-graphic.component';
 export * from './lib/linked-data-graphic.module';
-export { D3Data } from './lib/chart-generator';
+export { SimpleGraph as SimpleGraph } from './lib/data-interface';
+export { ColorProviderService, DefaultColorProviderService } from './lib/color-provider.service';

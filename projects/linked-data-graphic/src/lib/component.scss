@@ -1,6 +1,9 @@
-:host ::ng-deep .neo4jd3-graph {
+svg.mainCanvas {
   border: 1px solid #ddd;
   border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  cursor: move;
 }
 
 :host ::ng-deep .neo4jd3-info {
@@ -40,7 +43,10 @@
   }
 }
 
-:host ::ng-deep .node {
+.node {
+  touch-action: none;
+  -webkit-tap-highlight-color: #fff;
+
   &.node-highlighted {
     .ring {
       -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=50)';
@@ -53,9 +59,7 @@
 
   .outline {
     cursor: pointer;
-    fill: rgb(165, 171, 182);
     pointer-events: all;
-    stroke: rgb(154, 161, 172);
     stroke-width: 2px;
   }
 
@@ -69,20 +73,21 @@
   }
 
   .text {
+    font-size: 10px;
+    text-anchor: middle;
     &.icon {
       font-family: FontAwesome;
     }
   }
+
+  &:hover .ring {
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=30)';
+    filter: alpha(opacity=30);
+    opacity: .3;
+  }
 }
 
-:host ::ng-deep .node.selected .ring,
-:host ::ng-deep .node:hover .ring {
-  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=30)';
-  filter: alpha(opacity=30);
-  opacity: .3;
-}
-
-:host ::ng-deep .relationship {
+.relationship {
   cursor: default;
 
   line {
@@ -104,15 +109,10 @@
   text {
     cursor: default;
   }
-}
 
-:host ::ng-deep .relationship.selected .overlay,
-:host ::ng-deep .relationship:hover .overlay {
-  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=30)';
-  filter: alpha(opacity=30);
-  opacity: .3;
-}
-
-:host ::ng-deep svg {
-  cursor: move;
+  &:hover .overlay {
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=30)';
+    filter: alpha(opacity=30);
+    opacity: .3;
+  }
 }

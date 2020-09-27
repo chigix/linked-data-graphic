@@ -17,8 +17,7 @@
     ],
     "paths": {
       "linked-data-graphic": [
-        "dist/linked-data-graphic/linked-data-graphic",
-        "dist/linked-data-graphic"
+        "projects/linked-data-graphic/src/public-api",
       ]
     }
   }

@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-data-protocol',
   templateUrl: './data-protocol.component.html',
 })
-export class DataProtocolComponent implements OnInit {
+export class DataProtocolComponent {
 
   codes = {
     nodeStructure: `
@@ -30,8 +30,5 @@ export class DataProtocolComponent implements OnInit {
   };
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

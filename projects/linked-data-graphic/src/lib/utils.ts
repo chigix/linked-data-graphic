@@ -29,8 +29,12 @@ export function darkenColor(color: string) {
   return rgb(color).darker(1);
 }
 
-export function rotation(source: D3Node, target: D3Node) {
-  return Math.atan2(target.y - source.y, target.x - source.x) * 180 / Math.PI;
+/**
+ * @returns degree of rotation
+ */
+export function rotation(source: D3Node, target: D3Node): number {
+  return (Math.atan2(target.y - source.y, target.x - source.x)
+    * 180 / Math.PI + 360) % 360;
 }
 
 /**
@@ -39,20 +43,20 @@ export function rotation(source: D3Node, target: D3Node) {
  * @export
  */
 export function unitaryNormalVector(
-  source: D3Node, target: D3Node, newLength = 1) {
+  source: D3Node, target: D3Node, newLength = 1): { x: number, y: number } {
   const center = { x: 0, y: 0 };
   const vector = unitaryVector(source, target, newLength);
   return rotatePoint(center, vector, 90);
 }
 
 export function unitaryVector(
-  source: D3Node, target: D3Node, newLength = 1) {
-  const length = Math.sqrt(
+  source: D3Node, target: D3Node, newLength = 1): { x: number, y: number } {
+  const scale = Math.sqrt(
     Math.pow(target.x - source.x, 2) + Math.pow(target.y - source.y, 2)
   ) / Math.sqrt(newLength);
   return {
-    x: (target.x - source.x) / length,
-    y: (target.y - source.y) / length,
+    x: (target.x - source.x) / scale,
+    y: (target.y - source.y) / scale,
   };
 }
 
@@ -61,7 +65,8 @@ export function unitaryVector(
  */
 export function rotatePoint(
   center: { x: number, y: number },
-  pointToRotate: { x: number, y: number }, angle: number) {
+  pointToRotate: { x: number, y: number }, angle: number)
+  : { x: number, y: number } {
   const radian = (Math.PI / 180) * angle;
   const cos = Math.cos(radian);
   const sin = Math.sin(radian);

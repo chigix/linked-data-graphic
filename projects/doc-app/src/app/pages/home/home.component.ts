@@ -1,16 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { LinkedDataGraphicComponent, D3Data } from 'linked-data-graphic';
+import { Component, ViewChild } from '@angular/core';
+import {
+  LinkedDataGraphicComponent, SimpleGraph,
+  ColorProviderService, DefaultColorProviderService,
+} from 'linked-data-graphic';
+import { SimulationNodeDatum } from 'd3-force';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
+  providers: [{ provide: ColorProviderService, useClass: DefaultColorProviderService }],
 })
 export class HomeComponent {
 
   @ViewChild(LinkedDataGraphicComponent)
   ldCanvas: LinkedDataGraphicComponent;
 
-  ldData: D3Data = {
+  ldData: SimpleGraph = {
     nodes: [
       { labels: ['8階へ戻る'], id: '1', properties: {} },
       { labels: ['8階から悲鳴が聞こえた'], id: '2', properties: {} },
@@ -77,6 +82,9 @@ export class HomeComponent {
     componentUsageHtml: `<chigix-ld-graphic [data]="thorinAndCompany"></chigix-ld-graphic>`,
   };
 
+  thorinAndCompanyHighlighter(node: SimulationNodeDatum): boolean {
+    return true;
+  }
   constructor() { }
 
 }
