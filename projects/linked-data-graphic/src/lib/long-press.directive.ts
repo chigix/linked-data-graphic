@@ -7,13 +7,13 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[chigixLongPress]'
+  selector: '[ngldLongPress]'
 })
 export class LongPressDirective {
   private isPressing: boolean;
   private isLongPressing: boolean;
-  timeout: number;
-  interval: number;
+  timeout: NodeJS.Timeout;
+  interval: NodeJS.Timeout;
 
   @Output() longPress = new EventEmitter();
 

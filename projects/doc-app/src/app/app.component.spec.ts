@@ -1,16 +1,16 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { APP_BASE_HREF } from '@angular/common';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Routes, RouterModule } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NavigationComponent } from './modules/navigation/navigation.component';
 import { LinkedDataGraphicModule } from 'linked-data-graphic';
-import {
-  MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule,
-  MatListModule,
-} from '@angular/material';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,7 +18,7 @@ const routes: Routes = [
 ];
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         // RouterTestingModule

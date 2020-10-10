@@ -4,7 +4,7 @@
   for Angular</p>
 
 <div style="height: 400px">
-  <chigix-ld-graphic [graph]="ldData" [zoomFit]="true"></chigix-ld-graphic>
+  <ngld-canvas [graph]="ldData" [zoomFit]="true"></ngld-canvas>
 </div>
 
 <section class="mat-typography">
@@ -56,7 +56,7 @@
     {{ codes.bindingProperty }}
   </app-code>
 
-  <p>Add a <code>&lt;chigix-ld-graphic&gt;</code> element,
+  <p>Add a <code>&lt;ngld-canvas&gt;</code> element,
     the <code>linked-data-graphic</code> component selector, into your
     application's template, where your linked data is intended to be shown.</p>
   <app-code language="javascript">
@@ -67,6 +67,6 @@
 </section>
 
 <div style="height: 400px">
-  <chigix-ld-graphic [graph]="thorinAndCompany" [debug]="true"
-    [highlightChecker]="thorinAndCompanyHighlighter"></chigix-ld-graphic>
+  <ngld-canvas [graph]="thorinAndCompany" [debug]="true"
+    [highlightChecker]="thorinAndCompanyHighlighter"></ngld-canvas>
 </div>

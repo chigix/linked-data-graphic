@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LinkedDataGraphicComponent } from './linked-data-graphic.component';
 
@@ -6,11 +6,11 @@ describe('LinkedDataGraphicComponent', () => {
   let component: LinkedDataGraphicComponent;
   let fixture: ComponentFixture<LinkedDataGraphicComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LinkedDataGraphicComponent ]
+      declarations: [LinkedDataGraphicComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,7 +1,7 @@
 import { Directive, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 
 @Directive({
-  selector: '[chigixBoxSizeListener]'
+  selector: '[ngldBoxSizeListener]'
 })
 export class BoxSizeListenerDirective {
 

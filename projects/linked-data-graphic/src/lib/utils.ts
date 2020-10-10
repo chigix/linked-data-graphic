@@ -1,4 +1,4 @@
-import { rgb } from 'd3-color';
+import { rgb, RGBColor } from 'd3-color';
 import { D3Node } from './data-interface';
 
 export const COLORS = [
@@ -25,7 +25,7 @@ export const COLORS = [
   '#ff75ea'  // pink
 ];
 
-export function darkenColor(color: string) {
+export function darkenColor(color: string): RGBColor {
   return rgb(color).darker(1);
 }
 
@@ -76,7 +76,12 @@ export function rotatePoint(
   };
 }
 
-export function fontAwesomeIcons() {
+/**
+ * Fonts awesome icons
+ * @returns string
+ * @remove
+ */
+export function fontAwesomeIcons(): { [name: string]: string } {
   return {
     glass: 'f000', music: 'f001',
     search: 'f002', 'envelope-o': 'f003', heart: 'f004',

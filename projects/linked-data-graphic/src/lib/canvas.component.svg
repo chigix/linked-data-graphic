@@ -7,7 +7,7 @@
     <g *ngFor="let rel of d3Graph.relationships" class="relationship"
       [attr.transform]="'translate(' + rel.source.x + ',' + rel.source.y
                         +') rotate(' + rel.rotate + ')'">
-      <text chigixBoxSizeListener [listenValue]="rel.pathDrawn.A1.x"
+      <text ngldBoxSizeListener [listenValue]="rel.pathDrawn.A1.x"
         (boxSize)="rel.textBoxSize=$event"
         class="text" fill="#000000" font-size="8px" pointer-events="none"
         text-anchor="middle"
@@ -41,7 +41,7 @@
     </g>
   </g>
   <g class="nodes">
-    <g cdkDrag chigixLongPress *ngFor="let node of d3Graph.nodes" class="node"
+    <g cdkDrag ngldLongPress *ngFor="let node of d3Graph.nodes" class="node"
       [class.node-highlighted]="highlightChecker(node)"
       [cdkDragFreeDragPosition]="{ x: node.translate.x, y: node.translate.y }"
       (cdkDragStarted)="onNodeDragStart(node);node.controlledByDragging=true"

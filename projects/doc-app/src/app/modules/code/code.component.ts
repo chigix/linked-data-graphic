@@ -57,7 +57,7 @@ export class CodeComponent implements AfterViewInit {
     private clipbardService: ClipboardService,
   ) { }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     const expectingTextNode = this.content.nativeElement.childNodes[0];
     this.code = expectingTextNode ?
       expectingTextNode.nodeValue
@@ -71,7 +71,7 @@ export class CodeComponent implements AfterViewInit {
     this.rawCode = code;
   }
 
-  public get code() {
+  public get code(): string {
     return this.rawCode;
   }
 
@@ -84,7 +84,7 @@ export class CodeComponent implements AfterViewInit {
     return this.rawHeader;
   }
 
-  private formatDisplayedCode() {
+  private formatDisplayedCode(): void {
     const leftAlignedCode = leftAlign(this.code);
     this.setCodeHtml(leftAlignedCode);
     this.codeText = this.getCodeText();
@@ -94,27 +94,27 @@ export class CodeComponent implements AfterViewInit {
       .subscribe(c => this.setCodeHtml(c), err => { /* ignore failure to format */ });
   }
 
-  private setCodeHtml(formattedCode: string) {
+  private setCodeHtml(formattedCode: string): void {
     this.codeContainer.nativeElement.innerHTML = formattedCode;
   }
 
-  private getCodeText() {
+  private getCodeText(): string {
     return this.codeContainer.nativeElement.textContent;
   }
 
-  doCopy() {
+  doCopy(): void {
     const code = this.codeText;
-    const successfullyCopied = this.clipbardService.copyFromContent(code);
+    this.clipbardService.copyFromContent(code);
   }
 
-  private getLineNumbs(code: string) {
+  private getLineNumbs(code: string): number | boolean {
     return isNaN(this.lineNumbs as number) ?
       code.split('\n').length > DEFAULT_LINE_NUMBS_COUNT : this.lineNumbs;
   }
 
 }
 
-function leftAlign(text: string) {
+function leftAlign(text: string): string {
   let indent = Number.MAX_VALUE;
   const lines = text.split('\n');
   lines.forEach(line => {

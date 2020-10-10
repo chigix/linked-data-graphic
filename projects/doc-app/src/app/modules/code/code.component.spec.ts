@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { from, interval, Subject, ConnectableObservable } from 'rxjs';
 import { share, take, tap, multicast } from 'rxjs/operators';
 
@@ -8,7 +8,7 @@ describe('CodeComponent', () => {
   let component: CodeComponent;
   let fixture: ComponentFixture<CodeComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [CodeComponent]
     })

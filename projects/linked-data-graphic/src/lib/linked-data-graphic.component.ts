@@ -49,7 +49,7 @@ interface D3SVGCalculated<PATH> {
 }
 
 @Component({
-  selector: 'chigix-ld-graphic',
+  selector: 'ngld-canvas',
   templateUrl: './canvas.component.svg',
   styleUrls: ['./component.scss'],
 })

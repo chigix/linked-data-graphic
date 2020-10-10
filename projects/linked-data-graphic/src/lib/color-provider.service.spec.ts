@@ -4,7 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { ColorProviderService } from './color-provider.service';
 
 @Component({
-  selector: 'chigix-ld-graphic',
+  selector: 'ngld-graphic',
   templateUrl: './canvas.component.svg',
   styleUrls: ['./component.scss'],
 })
