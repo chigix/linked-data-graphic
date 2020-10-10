@@ -168,6 +168,46 @@
           }
         }
       }
+    },
+    "pan-zoom-directive": {
+      "projectType": "library",
+      "root": "projects/pan-zoom-directive",
+      "sourceRoot": "projects/pan-zoom-directive/src",
+      "prefix": "ngld",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/pan-zoom-directive/tsconfig.lib.json",
+            "project": "projects/pan-zoom-directive/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/pan-zoom-directive/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/pan-zoom-directive/src/test.ts",
+            "tsConfig": "projects/pan-zoom-directive/tsconfig.spec.json",
+            "karmaConfig": "projects/pan-zoom-directive/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/pan-zoom-directive/tsconfig.lib.json",
+              "projects/pan-zoom-directive/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "doc-app"
 }

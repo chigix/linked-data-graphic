@@ -16,8 +16,11 @@
       "dom"
     ],
     "paths": {
-      "linked-data-graphic": [
-        "projects/linked-data-graphic/src/public-api",
+      "@ngld/canvas": [
+        "projects/linked-data-graphic/src/public-api"
+      ],
+      "@ngld/pan-zoom": [
+        "projects/pan-zoom-directive/src/public-api",
       ]
     }
   }

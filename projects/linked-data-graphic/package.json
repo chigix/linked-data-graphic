@@ -1,6 +1,6 @@
 {
-  "name": "linked-data-graphic",
-  "version": "0.1.1",
+  "name": "@ngld/canvas",
+  "version": "1.0.0",
   "description": "Linked Data Graphic Component for Angular",
   "peerDependencies": {
     "@angular/common": "^10.0.9",
@@ -10,6 +10,7 @@
   "dependencies": {
     "d3-color": "^2.0.0",
     "d3-force": "^2.1.1",
+    "@ngld/pan-zoom": "^1.0.0",
     "tslib": "^2.0.0"
   },
   "keywords": [

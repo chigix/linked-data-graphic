@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import {
   LinkedDataGraphicComponent, SimpleGraph,
   ColorProviderService, DefaultColorProviderService,
-} from 'linked-data-graphic';
+} from '@ngld/canvas';
 import { SimulationNodeDatum } from 'd3-force';
 
 @Component({

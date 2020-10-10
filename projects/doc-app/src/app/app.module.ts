@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LinkedDataGraphicModule } from 'linked-data-graphic';
+import { LinkedDataGraphicModule } from '@ngld/canvas';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NavigationComponent } from './modules/navigation/navigation.component';

@@ -1,4 +1,4 @@
-<svg #mainCanvas class="neo4jd3-graph mainCanvas"
+<svg #mainCanvas ngldPanZoom class="neo4jd3-graph mainCanvas"
     [attr.viewBox]="canvasViewBox.minX
                   + ' ' + canvasViewBox.minY
                   + ' ' + canvasViewBox.width
