@@ -43,7 +43,8 @@
     </g>
   </g>
   <g class="nodes">
-    <g cdkDrag ngldLongPress *ngFor="let node of d3Graph.nodes" class="node"
+    <g cdkDrag ngldLongPress ngldPanZoomExclude
+      *ngFor="let node of d3Graph.nodes" class="node"
       [class.node-highlighted]="highlightChecker(node)"
       [cdkDragFreeDragPosition]="{ x: node.translate.x, y: node.translate.y }"
       (cdkDragStarted)="onNodeDragStart(node);node.controlledByDragging=true"

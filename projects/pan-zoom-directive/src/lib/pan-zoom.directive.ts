@@ -1,4 +1,5 @@
 import { Directive, ElementRef, OnInit, HostListener, Output, EventEmitter, Input } from '@angular/core';
+import { PanZoomExcludeDirective } from './pan-zoom-exclude.directive';
 
 function isTouch(event: MouseEvent | TouchEvent): event is TouchEvent {
   return !!(event as TouchEvent).targetTouches;
@@ -28,6 +29,7 @@ export class PanZoomDirective implements OnInit {
   private previousViewBox?= {
     minX: 0, minY: 0, width: 500, height: 500,
   };
+  private excludeChildrenElements: PanZoomExcludeDirective[] = [];
 
   @Input() viewBox = {
     minX: 0, minY: 0, width: 500, height: 500,
@@ -44,10 +46,29 @@ export class PanZoomDirective implements OnInit {
 
   ngOnInit(): void { }
 
-  @HostListener('touchstart', ['$event'])
-  @HostListener('mousedown', ['$event'])
-  @HostListener('pointerdown', ['$event'])
-  onPointerDown(e: MouseEvent): void {
+  /**
+   * excludeChild
+   */
+  public excludeChild(component: PanZoomExcludeDirective): void {
+    this.excludeChildrenElements.push(component);
+  }
+
+  /**
+   * onExcludeDestroyed
+   */
+  public onExcludeDestroyed(component: PanZoomExcludeDirective): void {
+    this.excludeChildrenElements = this.excludeChildrenElements
+      .filter(c => c !== component);
+  }
+
+  @HostListener('touchstart', ['$event', '$event.target'])
+  @HostListener('mousedown', ['$event', '$event.target'])
+  @HostListener('pointerdown', ['$event', '$event.target'])
+  onPointerDown(e: MouseEvent, targetElement: HTMLElement): void {
+    if (this.excludeChildrenElements.find(c => c.checkExclusion(targetElement))) {
+      this.isPointerDown = false;
+      return;
+    }
     this.isPointerDown = true;
     this.pointerOrigin = getCoordinate(e);
     this.previousViewBox = { ...this.viewBox };
@@ -73,7 +94,6 @@ export class PanZoomDirective implements OnInit {
     }
     if (!this.boundingSize) {
       this.boundingSize = this.el.nativeElement.getBoundingClientRect();
-      console.log(this.boundingSize.width, this.el.nativeElement.getBBox().width);
     }
     // Prevent user to do a selection on the page
     e.preventDefault();
