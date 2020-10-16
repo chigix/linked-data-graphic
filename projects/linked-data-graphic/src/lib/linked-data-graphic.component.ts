@@ -294,4 +294,11 @@ export class LinkedDataGraphicComponent implements OnInit {
     node.fx = node.fy = null;
   }
 
+  onViewBoxChanged(e: {
+    minX: number, minY: number, width: number, height: number,
+  }): void {
+    this.canvasViewBox.minX = e.minX;
+    this.canvasViewBox.minY = e.minY;
+  }
+
 }

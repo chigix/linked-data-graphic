@@ -2,7 +2,9 @@
     [attr.viewBox]="canvasViewBox.minX
                   + ' ' + canvasViewBox.minY
                   + ' ' + canvasViewBox.width
-                  + ' ' + canvasViewBox.height">
+                  + ' ' + canvasViewBox.height"
+    [viewBox]="canvasViewBox"
+    (viewBoxChanged)="onViewBoxChanged($event)">
   <g class="relationships">
     <g *ngFor="let rel of d3Graph.relationships" class="relationship"
       [attr.transform]="'translate(' + rel.source.x + ',' + rel.source.y
