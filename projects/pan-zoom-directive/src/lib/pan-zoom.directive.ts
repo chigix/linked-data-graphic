@@ -1,5 +1,12 @@
-import { Directive, ElementRef, OnInit, HostListener, Output, EventEmitter, Input } from '@angular/core';
+import { Directive, ElementRef, OnInit, OnDestroy, HostListener, Output, EventEmitter, Input, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { normalizePassiveListenerOptions } from '@angular/cdk/platform';
 import { PanZoomExcludeDirective } from './pan-zoom-exclude.directive';
+
+const activeCapturingEventOptions = normalizePassiveListenerOptions({
+  passive: false,
+  capture: true,
+});
 
 function isTouch(event: MouseEvent | TouchEvent): event is TouchEvent {
   return !!(event as TouchEvent).targetTouches;
@@ -14,10 +21,6 @@ function getCoordinate(
       y: event.targetTouches[1].clientY,
     };
   }
-  if (event.offsetX) {
-    // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/offsetX
-    return { x: event.offsetX, y: event.offsetY };
-  }
   return {
     x: event.clientX - clientRect.left,
     y: event.clientY - clientRect.top,
@@ -27,7 +30,7 @@ function getCoordinate(
 @Directive({
   selector: '[ngldPanZoom]'
 })
-export class PanZoomDirective implements OnInit {
+export class PanZoomDirective implements OnInit, OnDestroy {
 
   private pointerOrigin = { x: 0, y: 0 };
   private isPointerDown = false;
@@ -49,9 +52,36 @@ export class PanZoomDirective implements OnInit {
 
   constructor(
     private el: ElementRef<SVGSVGElement>,
+    @Inject(DOCUMENT) private document: Document,
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.document.addEventListener('touchstart', this.pointerDownListener, activeCapturingEventOptions);
+    this.document.addEventListener('mousedown', this.pointerDownListener, activeCapturingEventOptions);
+    this.document.addEventListener('pointerdown', this.pointerDownListener, activeCapturingEventOptions);
+
+    this.document.addEventListener('touchend', this.pointerUpListener, activeCapturingEventOptions);
+    this.document.addEventListener('mouseup', this.pointerUpListener, activeCapturingEventOptions);
+    this.document.addEventListener('pointerup', this.pointerUpListener, activeCapturingEventOptions);
+
+    this.document.addEventListener('touchmove', this.pointerMoveListener, activeCapturingEventOptions);
+    this.document.addEventListener('mousemove', this.pointerMoveListener, activeCapturingEventOptions);
+    this.document.addEventListener('pointermove', this.pointerMoveListener, activeCapturingEventOptions);
+  }
+
+  ngOnDestroy(): void {
+    this.document.removeEventListener('touchstart', this.pointerDownListener, activeCapturingEventOptions);
+    this.document.removeEventListener('mousedown', this.pointerDownListener, activeCapturingEventOptions);
+    this.document.removeEventListener('pointerdown', this.pointerDownListener, activeCapturingEventOptions);
+
+    this.document.removeEventListener('touchend', this.pointerUpListener, activeCapturingEventOptions);
+    this.document.removeEventListener('mouseup', this.pointerUpListener, activeCapturingEventOptions);
+    this.document.removeEventListener('pointerup', this.pointerUpListener, activeCapturingEventOptions);
+
+    this.document.removeEventListener('touchmove', this.pointerMoveListener, activeCapturingEventOptions);
+    this.document.removeEventListener('mousemove', this.pointerMoveListener, activeCapturingEventOptions);
+    this.document.removeEventListener('pointermove', this.pointerMoveListener, activeCapturingEventOptions);
+  }
 
   /**
    * excludeChild
@@ -68,34 +98,26 @@ export class PanZoomDirective implements OnInit {
       .filter(c => c !== component);
   }
 
-  @HostListener('touchstart', ['$event', '$event.target'])
-  @HostListener('mousedown', ['$event', '$event.target'])
-  @HostListener('pointerdown', ['$event', '$event.target'])
-  onPointerDown(e: MouseEvent, targetElement: HTMLElement): void {
-    if (this.excludeChildrenElements.find(c => c.checkExclusion(targetElement))) {
+  private pointerDownListener = (event: TouchEvent | MouseEvent) => {
+    if (!this.el.nativeElement.contains(event.target as HTMLElement)) {
+      return;
+    }
+    if (this.excludeChildrenElements.find(c => c.checkExclusion(event.target as HTMLElement))) {
       this.isPointerDown = false;
       return;
     }
     this.isPointerDown = true;
-    this.pointerOrigin = getCoordinate(e, this.el.nativeElement.getBoundingClientRect());
+    this.pointerOrigin = getCoordinate(event, { top: 0, left: 0 });
     this.previousViewBox = { ...this.viewBox };
     this.boundingSize = undefined;
   }
 
-  @HostListener('touchend', ['$event'])
-  @HostListener('mouseup', ['$event'])
-  @HostListener('mouseleave', ['$event'])
-  @HostListener('pointerup', ['$event'])
-  @HostListener('pointerleave', ['$event'])
-  onPointerUp(e: MouseEvent): void {
+  private pointerUpListener = (event: TouchEvent | MouseEvent) => {
     this.isPointerDown = false;
     this.previousViewBox = undefined;
   }
 
-  @HostListener('touchmove', ['$event'])
-  @HostListener('mousemove', ['$event'])
-  @HostListener('pointermove', ['$event'])
-  onPointerMove(e: MouseEvent): void {
+  private pointerMoveListener = (event: TouchEvent | MouseEvent) => {
     if (!this.isPointerDown) {
       return;
     }
@@ -103,10 +125,10 @@ export class PanZoomDirective implements OnInit {
       this.boundingSize = this.el.nativeElement.getBoundingClientRect();
     }
     // Prevent user to do a selection on the page
-    e.preventDefault();
+    event.preventDefault();
 
     // Get the current pointer position
-    const pointerPosition = getCoordinate(e, this.el.nativeElement.getBoundingClientRect());
+    const pointerPosition = getCoordinate(event, { top: 0, left: 0 });
     const ratio = this.previousViewBox.width / this.boundingSize.width;
 
     const newViewBox = {
