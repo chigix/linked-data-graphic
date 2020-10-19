@@ -5,16 +5,22 @@ function isTouch(event: MouseEvent | TouchEvent): event is TouchEvent {
   return !!(event as TouchEvent).targetTouches;
 }
 
-function getCoordinate(event: MouseEvent | TouchEvent): { x: number, y: number } {
+function getCoordinate(
+  event: MouseEvent | TouchEvent,
+  clientRect: { left: number, top: number }): { x: number, y: number } {
   if (isTouch(event)) {
     return {
       x: event.targetTouches[0].clientX,
       y: event.targetTouches[1].clientY,
     };
   }
+  if (event.offsetX) {
+    // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/offsetX
+    return { x: event.offsetX, y: event.offsetY };
+  }
   return {
-    x: event.clientX,
-    y: event.clientY,
+    x: event.clientX - clientRect.left,
+    y: event.clientY - clientRect.top,
   };
 }
 
@@ -26,7 +32,7 @@ export class PanZoomDirective implements OnInit {
   private pointerOrigin = { x: 0, y: 0 };
   private isPointerDown = false;
   private boundingSize?: { width: number, height: number };
-  private previousViewBox?= {
+  private previousViewBox ?= {
     minX: 0, minY: 0, width: 500, height: 500,
   };
   private excludeChildrenElements: PanZoomExcludeDirective[] = [];
@@ -34,7 +40,8 @@ export class PanZoomDirective implements OnInit {
   @Input() viewBox = {
     minX: 0, minY: 0, width: 500, height: 500,
   };
-  private newViewBox = { minX: 0, minY: 0 };
+
+  @Input() scaleFactor = 1.01;
 
   @Output() viewBoxChanged = new EventEmitter<{
     minX: number, minY: number, width: number, height: number,
@@ -70,7 +77,7 @@ export class PanZoomDirective implements OnInit {
       return;
     }
     this.isPointerDown = true;
-    this.pointerOrigin = getCoordinate(e);
+    this.pointerOrigin = getCoordinate(e, this.el.nativeElement.getBoundingClientRect());
     this.previousViewBox = { ...this.viewBox };
     this.boundingSize = undefined;
   }
@@ -99,13 +106,33 @@ export class PanZoomDirective implements OnInit {
     e.preventDefault();
 
     // Get the current pointer position
-    const pointerPosition = getCoordinate(e);
+    const pointerPosition = getCoordinate(e, this.el.nativeElement.getBoundingClientRect());
     const ratio = this.previousViewBox.width / this.boundingSize.width;
 
-    this.newViewBox.minX = this.previousViewBox.minX - ((pointerPosition.x - this.pointerOrigin.x) * ratio);
-    this.newViewBox.minY = this.previousViewBox.minY - ((pointerPosition.y - this.pointerOrigin.y) * ratio);
+    const newViewBox = {
+      minX: this.previousViewBox.minX - ((pointerPosition.x - this.pointerOrigin.x) * ratio),
+      minY: this.previousViewBox.minY - ((pointerPosition.y - this.pointerOrigin.y) * ratio)
+    };
 
-    this.viewBoxChanged.emit({ ...this.viewBox, ...this.newViewBox });
+    this.viewBoxChanged.emit({ ...this.viewBox, ...newViewBox });
+  }
+
+  @HostListener('wheel', ['$event'])
+  onZoom(e: WheelEvent): void {
+    e.preventDefault();
+    const position = getCoordinate(e, this.el.nativeElement.getBoundingClientRect());
+    const scale = Math.pow(this.scaleFactor, e.deltaY < 0 ? 1 : -1);
+    const sx = position.x / this.el.nativeElement.clientWidth;
+    const sy = position.y / this.el.nativeElement.clientHeight;
+
+    const x = this.viewBox.minX + this.viewBox.width * sx;
+    const y = this.viewBox.minY + this.viewBox.height * sy;
+    this.viewBoxChanged.emit({
+      minX: x + scale * (this.viewBox.minX - x),
+      minY: y + scale * (this.viewBox.minY - y),
+      width: this.viewBox.width * scale,
+      height: this.viewBox.height * scale,
+    });
   }
 
 }

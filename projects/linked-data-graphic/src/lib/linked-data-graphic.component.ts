@@ -299,6 +299,8 @@ export class LinkedDataGraphicComponent implements OnInit {
   }): void {
     this.canvasViewBox.minX = e.minX;
     this.canvasViewBox.minY = e.minY;
+    this.canvasViewBox.width = e.width;
+    this.canvasViewBox.height = e.height;
   }
 
 }
