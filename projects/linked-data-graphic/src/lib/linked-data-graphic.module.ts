@@ -5,15 +5,17 @@ import { PanZoomDirectiveModule } from '@ngld/pan-zoom';
 import { LinkedDataGraphicComponent } from './linked-data-graphic.component';
 import { BoxSizeListenerDirective } from './box-size-listener.directive';
 import { LongPressDirective } from './long-press.directive';
+import { InfoPanelComponentComponent } from './info-panel-component/info-panel-component.component';
 
 @NgModule({
   declarations: [
     LinkedDataGraphicComponent,
     BoxSizeListenerDirective,
-    LongPressDirective],
+    LongPressDirective,
+    InfoPanelComponentComponent],
   imports: [
     BrowserModule, DragDropModule, PanZoomDirectiveModule,
   ],
-  exports: [LinkedDataGraphicComponent]
+  exports: [LinkedDataGraphicComponent, InfoPanelComponentComponent]
 })
 export class LinkedDataGraphicModule { }

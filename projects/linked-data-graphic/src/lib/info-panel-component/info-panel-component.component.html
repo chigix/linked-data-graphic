@@ -1,0 +1,13 @@
+<div *ngIf="activeIndividual.observeActiveIndividual() | async as active;">
+  <ng-container *ngTemplateOutlet="infoPanel; context: {data: active}"></ng-container>
+</div>
+
+
+<ng-template #infoPanel let-data='data'>
+  <a href="#" class="class" [style.backgroundColor]="colorGetter.nextColorByName(data.labels[0])">
+    <strong> {{ data.labels || data.type }} </strong>
+  </a>
+  <a href="#" class="property">
+    <strong> {{ data.id }} </strong>
+  </a>
+</ng-template>

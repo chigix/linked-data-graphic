@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Optional } from '@angular/core';
 import { Simulation, forceSimulation, forceCollide, forceManyBody, forceLink, forceCenter, ForceLink } from 'd3-force';
 import { SimpleGraph, D3Relationship, D3Node } from './data-interface';
-import { ColorProviderService, ColorGetter } from './color-provider.service';
+import { ColorProviderService, ColorGetter, DefaultColorProviderService } from './color-provider.service';
+import { ActiveIndividualCastService } from './active-individual-cast.service';
 import { darkenColor, rotatePoint, rotation, unitaryNormalVector, unitaryVector } from './utils';
 import { CdkDragMove } from '@angular/cdk/drag-drop';
 
@@ -95,8 +96,16 @@ export class LinkedDataGraphicComponent implements OnInit {
   @Input() highlightChecker = (node: D3Node) => false;
 
   constructor(
-    private colorProvider: ColorProviderService<LinkedDataGraphicComponent>,
-  ) { }
+    @Optional() private colorProvider: ColorProviderService<LinkedDataGraphicComponent>,
+    @Optional() public activeIndividual: ActiveIndividualCastService,
+  ) {
+    if (!this.activeIndividual) {
+      this.activeIndividual = new ActiveIndividualCastService();
+    }
+    if (!this.colorProvider) {
+      this.colorProvider = new DefaultColorProviderService();
+    }
+  }
 
   async ngOnInit(): Promise<void> {
     this.colorGetter = this.colorProvider.registerComponent(this);

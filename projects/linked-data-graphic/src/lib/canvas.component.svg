@@ -51,7 +51,9 @@
       (cdkDragEnded)="simulation.alphaTarget(0)"
       (cdkDragMoved)="onNodeDragging($event, node)"
       (longPressing)="onNodeDragStart(node);node.isLongPressing=true;node.fx=node.x;node.fy=node.y"
-      (click)="onNodeClick($event, node)">
+      (click)="onNodeClick($event, node)"
+      (mouseenter)="activeIndividual.updateActiveIndividual(node)"
+      (mouseleave)="activeIndividual.clearActiveIndividual()">
       <circle class="ring" [attr.r]="nodeRadius * 1.16">
         <title> {{ node.labels[0] }} [{{node.id}}] </title>
       </circle>
