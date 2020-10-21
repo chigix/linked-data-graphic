@@ -1,24 +1,13 @@
-# LinkedDataGraphic
+# ngld-canvas
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.9.
+This library is designed as the main components for the Linked Data Graphics Project, an Angular Module that provide a Linked Data Visualization similar to neo4j.
 
-## Code scaffolding
+![preview](https://raw.githubusercontent.com/chigix/linked-data-graphic/master/projects/doc-app/src/assets/repository-open-graph.png)
 
-Run `ng generate component component-name --project linked-data-graphic` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project linked-data-graphic`.
-> Note: Don't forget to add `--project linked-data-graphic` or else it will be added to the default project in your `angular.json` file. 
+## Dependency
 
-## Build
+* Angular >= 10.0.0
 
-Run `ng build linked-data-graphic` to build the project. The build artifacts will be stored in the `dist/` directory.
+## License
 
-## Publishing
-
-After building your library with `ng build linked-data-graphic`, go to the dist folder `cd dist/linked-data-graphic` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test linked-data-graphic` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+MIT

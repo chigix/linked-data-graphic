@@ -2,7 +2,7 @@
 
 An Angular Module to have a Linked Data Visualization similar to neo4j.
 
-![preview](https://raw.githubusercontent.com/chigix/linked-data-graphic/master/src/assets/repository-open-graph.png)
+![preview](https://raw.githubusercontent.com/chigix/linked-data-graphic/master/projects/doc-app/src/assets/repository-open-graph.png)
 
 ## Features
 

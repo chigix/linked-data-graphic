@@ -2,5 +2,6 @@
   "packages": [
     "projects/*"
   ],
+  "npmClient": "yarn",
   "version": "independent"
 }
