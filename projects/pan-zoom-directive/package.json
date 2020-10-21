@@ -1,6 +1,6 @@
 {
   "name": "@ngld/pan-zoom",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "build": "ng build --prod pan-zoom-directive"
   },
