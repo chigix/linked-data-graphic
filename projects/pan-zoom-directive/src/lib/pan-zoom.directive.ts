@@ -39,6 +39,7 @@ export class PanZoomDirective implements OnInit, OnDestroy {
     minX: 0, minY: 0, width: 500, height: 500,
   };
   private excludeChildrenElements: PanZoomExcludeDirective[] = [];
+  private document: Document;
 
   @Input() viewBox = {
     minX: 0, minY: 0, width: 500, height: 500,
@@ -52,8 +53,12 @@ export class PanZoomDirective implements OnInit, OnDestroy {
 
   constructor(
     private el: ElementRef<SVGSVGElement>,
-    @Inject(DOCUMENT) private document: Document,
-  ) { }
+    // Avoid ngcc error:
+    // https://github.com/angular/components/blob/2b1d84e2bc1d7295e53a753211e99a0e73110b45/src/cdk/drag-drop/drag-drop-registry.ts#L64
+    @Inject(DOCUMENT) $document: any,
+  ) {
+    this.document = $document;
+  }
 
   ngOnInit(): void {
     this.document.addEventListener('touchstart', this.pointerDownListener, activeCapturingEventOptions);

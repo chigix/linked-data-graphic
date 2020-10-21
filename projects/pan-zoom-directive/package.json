@@ -1,6 +1,9 @@
 {
   "name": "@ngld/pan-zoom",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha",
+  "scripts": {
+    "build": "ng build --prod pan-zoom-directive"
+  },
   "peerDependencies": {
     "@angular/common": "^10.1.5",
     "@angular/core": "^10.1.5"

@@ -87,7 +87,7 @@ export class LinkedDataGraphicComponent implements OnInit {
     height: 500,
   };
 
-  private simulation: Simulation<D3Node, D3Relationship>;
+  simulation: Simulation<D3Node, D3Relationship>;
   private colorGetter: ColorGetter;
   private componentInited = false;
   private rawGraph: SimpleGraph;
