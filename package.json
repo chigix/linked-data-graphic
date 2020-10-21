@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build --prod",
     "deploy": "ng build --prod && firebase deploy",
-    "build-release": "lerna run build && npx lerna publish --contents dist",
+    "build-release": "lerna run build && lerna publish --contents dist",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -2,6 +2,7 @@
 
 # compiled output
 /dist
+**/dist
 /tmp
 /out-tsc
 # Only exists if Bazel was run
@@ -43,6 +44,7 @@ speed-measure-plugin*.json
 npm-debug.log
 yarn-error.log
 testem.log
+lerna-debug.log
 /typings
 
 # System Files
