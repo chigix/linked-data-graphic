@@ -33,7 +33,6 @@ speed-measure-plugin*.json
 .history/*
 
 # Firebase
-/.firebaserc
 .firebase/
 
 # misc

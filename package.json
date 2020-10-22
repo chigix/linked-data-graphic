@@ -43,7 +43,7 @@
     "codelyzer": "^6.0.0",
     "d3-color": "^2.0.0",
     "d3-force": "^2.1.1",
-    "firebase-tools": "^8.12.1",
+    "firebase-tools": "^8.13.1",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
