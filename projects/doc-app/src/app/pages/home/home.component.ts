@@ -58,7 +58,7 @@ export class HomeComponent {
 
   codes = {
     installInTs: `
-    import { LinkedDataGraphicModule } from 'linked-data-graphic';
+    import { LinkedDataGraphicModule } from '@ngld/canvas';
     ...
     imports: [
       ...
@@ -82,7 +82,7 @@ export class HomeComponent {
           { id: '23', type: 'through', source: '3', target: '4' },
         ],
       };`,
-    componentUsageHtml: `<chigix-ld-graphic [data]="thorinAndCompany"></chigix-ld-graphic>`,
+    componentUsageHtml: `<ngld-canvas [data]="thorinAndCompany"></ngld-canvas>`,
   };
 
   thorinAndCompanyHighlighter(node: SimulationNodeDatum): boolean {
