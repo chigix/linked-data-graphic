@@ -82,7 +82,7 @@ export class HomeComponent {
           { id: '23', type: 'through', source: '3', target: '4' },
         ],
       };`,
-    componentUsageHtml: `<ngld-canvas [data]="thorinAndCompany"></ngld-canvas>`,
+    componentUsageHtml: `<ngld-canvas [graph]="thorinAndCompany"></ngld-canvas>`,
   };
 
   thorinAndCompanyHighlighter(node: SimulationNodeDatum): boolean {
