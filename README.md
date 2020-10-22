@@ -30,7 +30,7 @@ An Angular Module to have a Linked Data Visualization similar to neo4j.
 Install this component through npm:
 
 ```bash
-npm install linked-data-graphic
+npm install @ngld/canvas
 ```
 
 Add the component's element into the template with a prepared Linked Data set
@@ -38,10 +38,14 @@ conforming to D3's [node](https://github.com/d3/d3-force#simulation_nodes) and
 [links](https://github.com/d3/d3-force#link_links) structure.
 
 ```html
-<ld-graphic [data]="ldData"></ld-graphic>
+<ngld-canvas [graph]="ldData" [zoomFit]="true"></ngld-canvas>
 ```
 
 ## Story
 
 This library is greatly inspired by the neo4j visualization library:
 https://github.com/eisman/neo4jd3
+
+## License
+
+MIT
