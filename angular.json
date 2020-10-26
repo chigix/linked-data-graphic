@@ -208,6 +208,46 @@
           }
         }
       }
+    },
+    "transition": {
+      "projectType": "library",
+      "root": "projects/transition",
+      "sourceRoot": "projects/transition/src",
+      "prefix": "ngld",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/transition/tsconfig.lib.json",
+            "project": "projects/transition/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/transition/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/transition/src/test.ts",
+            "tsConfig": "projects/transition/tsconfig.spec.json",
+            "karmaConfig": "projects/transition/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/transition/tsconfig.lib.json",
+              "projects/transition/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "doc-app"
 }

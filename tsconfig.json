@@ -20,7 +20,10 @@
         "projects/linked-data-graphic/src/public-api"
       ],
       "@ngld/pan-zoom": [
-        "projects/pan-zoom-directive/src/public-api",
+        "projects/pan-zoom-directive/src/public-api"
+      ],
+      "@ngld/transition": [
+        "projects/transition/src/public-api"
       ]
     }
   }

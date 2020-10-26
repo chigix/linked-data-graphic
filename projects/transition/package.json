@@ -1,0 +1,15 @@
+{
+  "name": "transition",
+  "version": "1.0.0-alpha",
+  "license": "MIT",
+  "scripts": {
+    "build": "ng build --prod transition"
+  },
+  "peerDependencies": {
+    "@angular/common": "^10.1.6",
+    "@angular/core": "^10.1.6"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

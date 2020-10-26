@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Optional } from '@angular/core';
+import { CdkDragMove } from '@angular/cdk/drag-drop';
+import { Easing, trigger, transition, render, TransitionService, animate } from '@ngld/transition';
 import { Simulation, forceSimulation, forceCollide, forceManyBody, forceLink, forceCenter, ForceLink } from 'd3-force';
+import { interpolateZoom } from 'd3-interpolate';
 import { SimpleGraph, D3Relationship, D3Node } from './data-interface';
 import { ColorProviderService, ColorGetter, DefaultColorProviderService } from './color-provider.service';
 import { ActiveIndividualCastService } from './active-individual-cast.service';
 import { darkenColor, rotatePoint, rotation, unitaryNormalVector, unitaryVector } from './utils';
-import { CdkDragMove } from '@angular/cdk/drag-drop';
 
 type COLOR_HEX = string;
 
@@ -29,6 +31,17 @@ interface ArrowPath {
   D3: { x: number, y: number };
 }
 
+interface CirclePath {
+  // Subpanels in Clockwise
+  //         A1 --- B1
+  //      D1------------C1
+  A1: { x: number, y: number };
+  B1: { x: number, y: number };
+  C1: { x: number, y: number };
+  D1: { x: number, y: number };
+  R1: { inner: number, outer: number };
+}
+
 interface BoxSize {
   width: number;
   height: number;
@@ -41,6 +54,7 @@ interface D3SVGCalculated<PATH> {
   pathDrawn: PATH;
   controlledByDragging: boolean;
   isLongPressing: boolean;
+  selected: boolean;
   textTranslate: { x: number, y: number };
 
   color: {
@@ -49,7 +63,50 @@ interface D3SVGCalculated<PATH> {
   };
 }
 
+const interpolateRadius = interpolateZoom([0, 0, 33], [0, 0, 66]);
+const cosineStart = Math.cos(2 * Math.PI / 180);
+const sineStart = Math.sin(2 * Math.PI / 180);
+const cosineEnd = Math.cos(120 * Math.PI / 180);
+const sineEnd = Math.sin(120 * Math.PI / 180);
+
 @Component({
+  providers: [{
+    provide: TransitionService,
+    useFactory: () => new TransitionService([
+      trigger('openClose', [
+        transition((from, to) => from === 'void' && to === 'open', [
+          render<D3Node & D3SVGCalculated<CirclePath>>((p, node) => {
+            const radiusOuter = interpolateRadius(p)[2];
+            // sin(2) * 33, cos(2) * 33
+            node.pathDrawn.A1 = { x: sineStart * 33, y: - cosineStart * 33 };
+            // sin(120) * 33, cos(120) * 33
+            node.pathDrawn.B1 = { x: sineEnd * 33, y: - cosineEnd * 33 };
+            // sin(120) * 63, cos(120) * 63
+            node.pathDrawn.C1 = { x: sineEnd * radiusOuter, y: - cosineEnd * radiusOuter };
+            // sin(2) * 63, cos(2) * 63
+            node.pathDrawn.D1 = { x: sineStart * radiusOuter, y: - cosineStart * radiusOuter };
+            node.pathDrawn.R1.outer = radiusOuter;
+          }),
+          animate(200, Easing.easeInCubic),
+        ]),
+        transition((from, to) => from === 'open' && to === 'void', [
+          render<D3Node & D3SVGCalculated<CirclePath>>((p, node) => {
+            const radiusOuter = interpolateRadius(1 - p)[2];
+            // sin(2) * 33, cos(2) * 33
+            node.pathDrawn.A1 = { x: sineStart * 33, y: - cosineStart * 33 };
+            // sin(120) * 33, cos(120) * 33
+            node.pathDrawn.B1 = { x: sineEnd * 33, y: - cosineEnd * 33 };
+            // sin(120) * 63, cos(120) * 63
+            node.pathDrawn.C1 = { x: sineEnd * radiusOuter, y: - cosineEnd * radiusOuter };
+            // sin(2) * 63, cos(2) * 63
+            node.pathDrawn.D1 = { x: sineStart * radiusOuter, y: - cosineStart * radiusOuter };
+            node.pathDrawn.R1.outer = radiusOuter;
+          }),
+          animate(200, Easing.easeOutCubic),
+        ]),
+      ]),
+    ]),
+  }],
   selector: 'ngld-canvas',
   templateUrl: './canvas.component.svg',
   styleUrls: ['./component.scss'],
@@ -77,7 +134,7 @@ export class LinkedDataGraphicComponent implements OnInit {
       D3Relationship & D3SVGCalculated<ArrowPath>
       & { textBoxSize: BoxSize }
     )[],
-    nodes: [] as (D3Node & D3SVGCalculated<void>)[],
+    nodes: [] as (D3Node & D3SVGCalculated<CirclePath>)[],
   };
 
   canvasViewBox = {
@@ -92,10 +149,12 @@ export class LinkedDataGraphicComponent implements OnInit {
   private componentInited = false;
   private rawGraph: SimpleGraph;
   private initialLoad = true;
+  private selectedNode: D3Node & D3SVGCalculated<CirclePath>;
 
   @Input() highlightChecker = (node: D3Node) => false;
 
   constructor(
+    private transitionService: TransitionService,
     @Optional() private colorProvider: ColorProviderService<LinkedDataGraphicComponent>,
     @Optional() public activeIndividual: ActiveIndividualCastService,
   ) {
@@ -239,7 +298,7 @@ export class LinkedDataGraphicComponent implements OnInit {
       this.d3Graph.relationships.push({
         translate: { x: 0, y: 0 },
         rotate: 0, controlledByDragging: false, isLongPressing: false,
-        textTranslate: { x: 0, y: 0 },
+        selected: false, textTranslate: { x: 0, y: 0 },
         pathDrawn: {
           A1: { x: 0, y: 0 }, B1: { x: 0, y: 0 }, C1: { x: 0, y: 0 },
           D1: { x: 0, y: 0 },
@@ -259,9 +318,12 @@ export class LinkedDataGraphicComponent implements OnInit {
       this.d3Graph.nodes.push({
         translate: { x: 0, y: 0 },
         rotate: 0, controlledByDragging: false, isLongPressing: false,
-        textTranslate: { x: 0, y: 0 },
-        pathDrawn: null,
-        color: { fill: color, stroke: darkenColor(color).hex() },
+        selected: false, textTranslate: { x: 0, y: 0 },
+        pathDrawn: {
+          A1: { x: 0, y: 0 }, B1: { x: 0, y: 0 }, C1: { x: 0, y: 0 },
+          D1: { x: 0, y: 0 }, R1: { inner: 33, outer: 33 },
+        },
+        color: { fill: color, stroke: darkenColor(color).formatHex() },
         ...node,
       });
     });
@@ -294,13 +356,28 @@ export class LinkedDataGraphicComponent implements OnInit {
     this.simulation.alphaTarget(0.3).restart();
   }
 
-  onNodeClick(e: MouseEvent, node: D3Node & D3SVGCalculated<ArrowPath>): void {
+  onNodeClick(e: MouseEvent, node: D3Node & D3SVGCalculated<CirclePath>): void {
     if (node.controlledByDragging || node.isLongPressing) {
       node.controlledByDragging = false;
       node.isLongPressing = false;
       return;
     }
     node.fx = node.fy = null;
+    if (node.selected) {
+      this.selectedNode = null;
+      this.transitionService.animate('openClose', 'open', 'void', node)
+        .then(_ => node.selected = false);
+    } else {
+      node.selected = true;
+      if (this.selectedNode) {
+        const previousNode = this.selectedNode;
+        this.transitionService
+          .animate('openClose', 'open', 'void', this.selectedNode)
+          .then(_ => previousNode.selected = false);
+      }
+      this.selectedNode = node;
+      this.transitionService.animate('openClose', 'void', 'open', node);
+    }
   }
 
   onViewBoxChanged(e: {

@@ -23,6 +23,8 @@
     "@angular/platform-browser": "~10.1.6",
     "@angular/platform-browser-dynamic": "~10.1.6",
     "@angular/router": "~10.1.6",
+    "@types/d3-interpolate": "^2.0.0",
+    "d3-interpolate": "^2.0.1",
     "ngx-clipboard": "^14.0.1",
     "prismjs": "^1.21.0",
     "rxjs": "~6.5.5",

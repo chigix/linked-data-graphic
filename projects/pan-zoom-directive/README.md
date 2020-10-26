@@ -1,6 +1,6 @@
 # PanZoomDirective
 
-An angular directive that make a svg element able to be zoomed and panned
+An angular directive that makes a svg element able to be zoomed and panned
 through calculating its viewbox.
 
 This library is initially designed to work with `<ngld-canvas>` in
