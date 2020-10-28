@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { PanZoomDirectiveModule } from '@ngld/pan-zoom';
+import { SvgIconModule } from '@ngld/icon';
 import { LinkedDataGraphicComponent } from './linked-data-graphic.component';
 import { BoxSizeListenerDirective } from './box-size-listener.directive';
 import { LongPressDirective } from './long-press.directive';
@@ -15,6 +16,7 @@ import { InfoPanelComponentComponent } from './info-panel-component/info-panel-c
     InfoPanelComponentComponent],
   imports: [
     BrowserModule, DragDropModule, PanZoomDirectiveModule,
+    SvgIconModule
   ],
   exports: [LinkedDataGraphicComponent, InfoPanelComponentComponent]
 })

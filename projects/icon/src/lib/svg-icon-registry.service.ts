@@ -1,4 +1,4 @@
-import { ErrorHandler, Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { ErrorHandler, Inject, Injectable, InjectionToken, Optional, ValueProvider } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -6,6 +6,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 
 export const SVG_ICONS = new InjectionToken<Array<SvgIconInfo>>('SvgIcons');
+
+export interface SvgIconInfoProvider extends ValueProvider {
+  useValue: SvgIconInfo;
+}
 
 export interface SvgIconInfo {
   namespace?: string;
@@ -25,7 +29,7 @@ const DEFAULT_NS = '$$default';
  * https://github.com/angular/angular/blob/f8096d499324cf0961f092944bbaedd05364eea1/aio/src/app/shared/custom-icon-registry.ts
  */
 @Injectable()
-export class CustomIconRegistry extends MatIconRegistry {
+export class SvgIconRegistry extends MatIconRegistry {
 
   private cachedSvgElements: SvgIconMap = { [DEFAULT_NS]: {} };
 

@@ -24,6 +24,18 @@
       ],
       "@ngld/transition": [
         "projects/transition/src/public-api"
+      ],
+      "@ngld/icon": [
+        "projects/icon/src/public-api"
+      ],
+      "@ngld/icon/expand.icon": [
+        "projects/icon/expand.icon/src/public_api"
+      ],
+      "@ngld/icon/remove.icon": [
+        "projects/icon/remove.icon/src/public_api"
+      ],
+      "@ngld/icon/unlock.icon": [
+        "projects/icon/unlock.icon/src/public_api"
       ]
     }
   }

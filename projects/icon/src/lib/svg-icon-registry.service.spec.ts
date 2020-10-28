@@ -3,7 +3,7 @@ import { ErrorHandler } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { CustomIconRegistry, SvgIconInfo } from './custom-icon-registry.service';
+import { SvgIconRegistry, SvgIconInfo } from './svg-icon-registry.service';
 
 function createSvg(svgSrc: string): SVGSVGElement {
   const div = document.createElement('div');
@@ -28,7 +28,7 @@ describe('CustomIconRegistryService', () => {
       { namespace: 'bankai', name: 'test_icon', svgSource: svgSrc3 },
     ];
 
-    const registry = new CustomIconRegistry(
+    const registry = new SvgIconRegistry(
       fakeHttpClient, fakeDomSanitizer, fakeDocument, fakeErrorHandler, svgIcons
     );
     registry.getNamedSvgIcon('test_icon', 'jikai').toPromise().then(
@@ -47,7 +47,7 @@ describe('CustomIconRegistryService', () => {
     ];
     spyOn(MatIconRegistry.prototype, 'getNamedSvgIcon');
 
-    const registry = new CustomIconRegistry(
+    const registry = new SvgIconRegistry(
       fakeHttpClient, fakeDomSanitizer, fakeDocument, fakeErrorHandler, svgIcons,
     );
 

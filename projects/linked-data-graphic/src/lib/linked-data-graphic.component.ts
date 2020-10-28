@@ -1,12 +1,16 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Optional } from '@angular/core';
 import { CdkDragMove } from '@angular/cdk/drag-drop';
 import { Easing, trigger, transition, render, TransitionService, animate } from '@ngld/transition';
+import { EXPAND_ICON_PROVIDER } from '@ngld/icon/expand.icon';
+import { REMOVE_ICON_PROVIDER } from '@ngld/icon/remove.icon';
+import { UNLOCK_ICON_PROVIDER } from '@ngld/icon/unlock.icon';
 import { Simulation, forceSimulation, forceCollide, forceManyBody, forceLink, forceCenter, ForceLink } from 'd3-force';
 import { interpolateZoom } from 'd3-interpolate';
 import { SimpleGraph, D3Relationship, D3Node } from './data-interface';
 import { ColorProviderService, ColorGetter, DefaultColorProviderService } from './color-provider.service';
 import { ActiveIndividualCastService } from './active-individual-cast.service';
 import { darkenColor, rotatePoint, rotation, unitaryNormalVector, unitaryVector } from './utils';
+import { SvgIconRegistry } from '@ngld/icon';
 
 type COLOR_HEX = string;
 
@@ -106,7 +110,10 @@ const sineEnd = Math.sin(120 * Math.PI / 180);
         ]),
       ]),
     ]),
-  }],
+  }
+    , [EXPAND_ICON_PROVIDER, REMOVE_ICON_PROVIDER, UNLOCK_ICON_PROVIDER]
+    , SvgIconRegistry
+  ],
   selector: 'ngld-canvas',
   templateUrl: './canvas.component.svg',
   styleUrls: ['./component.scss'],
