@@ -5,7 +5,7 @@ import { PLUS_ICON_PROVIDER } from '@ngld/icon/plus.icon';
 import { REMOVE_ICON_PROVIDER } from '@ngld/icon/remove.icon';
 import { UNLOCK_ICON_PROVIDER } from '@ngld/icon/unlock.icon';
 import { SvgIconRegistry } from '@ngld/icon';
-import { BehaviorSubject } from 'rxjs';
+import { nanoid } from 'nanoid';
 import * as rfdc from 'rfdc';
 import { Simulation, forceSimulation, forceCollide, forceManyBody, forceLink, forceCenter, ForceLink } from 'd3-force';
 import { interpolateZoom } from 'd3-interpolate';
@@ -79,15 +79,15 @@ export class LinkedDataGraphicComponent implements OnInit {
   @Input() minCollision = 60;
   @Input() zoomFit = false;
   @Input() set debug(state: boolean) {
-    this.$states.debug.next(state);
+    this.$states.debug = state;
   }
   @Input() set graph(g: SimpleGraph) {
     this.initGraph = g;
   }
 
   $states = {
-    debug: new BehaviorSubject(false),
-    // dashedArrow: new BehaviorSubject<{ from: D3Node, to: D3Node }>(null),
+    debug: false,
+    dashedArrow: null as { from: D3Node, to: D3Node, id?: string },
   };
   d3Graph: GraphContainer;
 
@@ -108,7 +108,7 @@ export class LinkedDataGraphicComponent implements OnInit {
   constructor(
     private transitionService: TransitionService,
     @Optional() private colorProvider: ColorProviderService,
-    @Optional() public activeIndividual: ActiveIndividualCastService,
+    @Optional() private activeIndividual: ActiveIndividualCastService,
   ) {
     if (!this.activeIndividual) {
       this.activeIndividual = new ActiveIndividualCastService();
@@ -281,6 +281,7 @@ export class LinkedDataGraphicComponent implements OnInit {
   }
 
   onNodeClick(e: MouseEvent, node: GraphContainer['nodes'][0]): void {
+    e.stopPropagation();
     if (node.controlledByDragging || node.isLongPressing) {
       node.controlledByDragging = false;
       node.isLongPressing = false;
@@ -304,6 +305,54 @@ export class LinkedDataGraphicComponent implements OnInit {
     }
   }
 
+  updateDashedArrowSource(node: GraphContainer['nodes'][0]): void {
+    this.$states.dashedArrow = { from: node, to: null };
+  }
+
+  updateDashedArrowTarget(to: GraphContainer['nodes'][0]): void {
+    if (!to) {
+      // to is empty or removed ==> dashedArrow should not appear
+      if (this.$states.dashedArrow && this.$states.dashedArrow.id) {
+        const removeId = this.$states.dashedArrow.id;
+        this.$states.dashedArrow.id = null;
+        this.d3Graph.removeRelationById(removeId);
+        this.reloadSimulation();
+      }
+      if (this.$states.dashedArrow && this.$states.dashedArrow.from) {
+        this.$states.dashedArrow.to = null;
+        return;
+      }
+      this.$states.dashedArrow = null;
+      return;
+    }
+    if (this.$states.dashedArrow.from.id === to.id) {
+      return;
+    }
+    if (!this.$states.dashedArrow) {
+      this.$states.dashedArrow = { from: null, to };
+    } else {
+      // both from and to suffice dashedArrow appearing
+      const regId = nanoid();
+      this.$states.dashedArrow.to = to;
+      this.$states.dashedArrow.id = regId;
+      const source = this.$states.dashedArrow.from.id;
+      this.d3Graph.addRelation({
+        id: regId, type: 'for',
+        source, target: to.id, properties: { from: 1 }
+      });
+      this.reloadSimulation();
+    }
+  }
+
+  clearDashedArrow(ev: MouseEvent): void {
+    this.$states.dashedArrow = null;
+  }
+
+  plusDashedArrow(ev: MouseEvent): void {
+    ev.preventDefault();
+    this.$states.dashedArrow = null;
+  }
+
   onViewBoxChanged(e: {
     minX: number, minY: number, width: number, height: number,
   }): void {
@@ -311,13 +360,6 @@ export class LinkedDataGraphicComponent implements OnInit {
     this.canvasViewBox.minY = e.minY;
     this.canvasViewBox.width = e.width;
     this.canvasViewBox.height = e.height;
-  }
-
-  onPlusNodeButton(node: GraphContainer['nodes'][0]): void {
-    this.d3Graph.addRelation(
-      { id: 'bankai', type: 'for', source: '1', target: node.id, properties: { from: 1 } },
-    );
-    this.reloadSimulation();
   }
 
 }

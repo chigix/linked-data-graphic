@@ -4,6 +4,7 @@
                   + ' ' + canvasViewBox.width
                   + ' ' + canvasViewBox.height"
     [viewBox]="canvasViewBox"
+    (click)="clearDashedArrow($event)"
     (viewBoxChanged)="onViewBoxChanged($event)">
   <g class="relationships">
     <g *ngFor="let rel of d3Graph.relationships" class="relationship"
@@ -51,9 +52,9 @@
       (cdkDragEnded)="onNodeDragEnd($event, node)"
       (cdkDragMoved)="onNodeDragging($event, node)"
       (longPressing)="onNodeDragStart(node);node.isLongPressing=true;node.fx=node.x;node.fy=node.y"
-      (click)="onNodeClick($event, node)"
-      (mouseenter)="activeIndividual.updateActiveIndividual(node)"
-      (mouseleave)="activeIndividual.clearActiveIndividual()">
+      (click)="($states.dashedArrow && $states.dashedArrow.id) ? plusDashedArrow($event) : onNodeClick($event, node)"
+      (mouseenter)="$states.dashedArrow ? updateDashedArrowTarget(node) : activeIndividual.updateActiveIndividual(node)"
+      (mouseleave)="$states.dashedArrow ? updateDashedArrowTarget(null) : activeIndividual.clearActiveIndividual()">
       <circle class="ring" [attr.r]="nodeRadius * 1.16">
         <title> {{ node.labels[0] }} [{{node.id}}] </title>
       </circle>
@@ -64,7 +65,7 @@
         {{ node.labels.join(' ') }}</text>
       <ng-container *ngIf="node.selected">
         <path *ngFor="let panelRotate of [0,120,240]" class="context-menu-item"
-             (click)="onPlusNodeButton(node)"
+             (click)="updateDashedArrowSource(node)"
               [attr.transform]="'rotate(' + panelRotate + ')'"
               [attr.d]="'M ' + node.pathDrawn.D1.x + ' ' + node.pathDrawn.D1.y
                     + ' A ' + node.pathDrawn.R1.outer + ' ' + node.pathDrawn.R1.outer + ' 0 0,1 ' + node.pathDrawn.C1.x + ' ' + node.pathDrawn.C1.y
@@ -74,13 +75,13 @@
         <g ngld-icon svgIcon="unlock_node" transform="translate(-52,-30) scale(0.7)" color="#2A2C34"></g>
         <g ngld-icon svgIcon="remove_node" transform="translate(33,-24) scale(0.7)" color="#2A2C34"></g>
         <g ngld-icon svgIcon="plus_node"
-          (click)="onPlusNodeButton(node)"
+          (click)="updateDashedArrowSource(node)"
           transform="translate(-8,38) scale(0.7)" color="#2A2C34"></g>
       </ng-container>
     </g>
   </g>
 
-  <ng-container *ngIf="debug">
+  <ng-container *ngIf="$states.debug">
     <path *ngFor="let node of d3Graph.nodes" class="outline" stroke="green" stroke-width="1"
             [attr.d]="'M 0 0 '
             + ' L ' + node.x + ' ' + node.y

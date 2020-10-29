@@ -105,6 +105,33 @@ export class GraphContainer {
     return this;
   }
 
+  public removeRelationById(id: string): void {
+    const temp: GraphContainer['relationships'] = [];
+    while (true) {
+      const rel = this.relationships.shift();
+      if (!rel) {
+        break;
+      }
+      if (rel.id === id) {
+        break;
+      }
+      temp.unshift(rel);
+    }
+    temp.forEach(rel => this.relationships.unshift(rel));
+    const tempRawRelationship: D3Relationship[] = [];
+    while (true) {
+      const rel = this.rawGraph.relationships.shift();
+      if (!rel) {
+        break;
+      }
+      if (rel.id === id) {
+        break;
+      }
+      tempRawRelationship.unshift(rel);
+    }
+    tempRawRelationship.forEach(rel => this.rawGraph.relationships.unshift(rel));
+  }
+
   /**
    * addNode
    */
@@ -123,5 +150,20 @@ export class GraphContainer {
       ...node,
     });
     return this;
+  }
+
+  public removeNodeById(id: string): void {
+    const temp: GraphContainer['nodes'] = [];
+    while (true) {
+      const node = this.nodes.shift();
+      if (!node) {
+        break;
+      }
+      if (node.id === id) {
+        break;
+      }
+      temp.unshift(node);
+    }
+    temp.forEach(node => this.nodes.unshift(node));
   }
 }
