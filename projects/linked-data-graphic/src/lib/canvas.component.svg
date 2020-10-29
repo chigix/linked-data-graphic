@@ -48,7 +48,7 @@
       [class.node-highlighted]="highlightChecker(node)"
       [cdkDragFreeDragPosition]="{ x: node.translate.x, y: node.translate.y }"
       (cdkDragStarted)="onNodeDragStart(node);node.controlledByDragging=true"
-      (cdkDragEnded)="simulation.alphaTarget(0)"
+      (cdkDragEnded)="onNodeDragEnd($event, node)"
       (cdkDragMoved)="onNodeDragging($event, node)"
       (longPressing)="onNodeDragStart(node);node.isLongPressing=true;node.fx=node.x;node.fy=node.y"
       (click)="onNodeClick($event, node)"
@@ -64,6 +64,7 @@
         {{ node.labels.join(' ') }}</text>
       <ng-container *ngIf="node.selected">
         <path *ngFor="let panelRotate of [0,120,240]" class="context-menu-item"
+             (click)="onPlusNodeButton(node)"
               [attr.transform]="'rotate(' + panelRotate + ')'"
               [attr.d]="'M ' + node.pathDrawn.D1.x + ' ' + node.pathDrawn.D1.y
                     + ' A ' + node.pathDrawn.R1.outer + ' ' + node.pathDrawn.R1.outer + ' 0 0,1 ' + node.pathDrawn.C1.x + ' ' + node.pathDrawn.C1.y
@@ -72,7 +73,9 @@
                     + ' Z'"></path>
         <g ngld-icon svgIcon="unlock_node" transform="translate(-52,-30) scale(0.7)" color="#2A2C34"></g>
         <g ngld-icon svgIcon="remove_node" transform="translate(33,-24) scale(0.7)" color="#2A2C34"></g>
-        <g ngld-icon svgIcon="plus_node" transform="translate(-8,38) scale(0.7)" color="#2A2C34"></g>
+        <g ngld-icon svgIcon="plus_node"
+          (click)="onPlusNodeButton(node)"
+          transform="translate(-8,38) scale(0.7)" color="#2A2C34"></g>
       </ng-container>
     </g>
   </g>

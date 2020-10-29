@@ -1,39 +1,32 @@
 import { Injectable } from '@angular/core';
 import { COLORS } from './utils';
 
-export interface ColorGetter {
-  nextColor(): string;
-  nextColorByName(name: string): string;
-
-}
-
-export abstract class ColorProviderService<C> {
-  abstract registerComponent(compo: C): ColorGetter;
-
+export abstract class ColorProviderService {
+  abstract nextColor(): string;
+  abstract nextColorByName(name: string): string;
 }
 
 @Injectable()
-export class DefaultColorProviderService<C> extends ColorProviderService<C> {
+export class DefaultColorProviderService extends ColorProviderService {
+
+  private classes2colors: { [key: string]: string } = {};
 
   constructor() {
     super();
   }
 
-  registerComponent(compo: C): ColorGetter {
-    const classes2colors: { [key: string]: string } = {};
-    return {
-      nextColor: () => '#68bdf6',
-      nextColorByName: (name: string) => {
-        const color = classes2colors[name];
-        if (color) {
-          return color;
-        }
-        classes2colors[name] = COLORS[
-          Object.keys(classes2colors).length % COLORS.length
-        ];
-        return classes2colors[name];
-      },
-    };
+  nextColor(): string {
+    return '#68bdf6';
+  }
+  nextColorByName(name: string): string {
+    const color = this.classes2colors[name];
+    if (color) {
+      return color;
+    }
+    this.classes2colors[name] = COLORS[
+      Object.keys(this.classes2colors).length % COLORS.length
+    ];
+    return this.classes2colors[name];
   }
 
 }

@@ -1,71 +1,22 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Optional } from '@angular/core';
-import { CdkDragMove } from '@angular/cdk/drag-drop';
+import { CdkDragEnd, CdkDragMove } from '@angular/cdk/drag-drop';
 import { Easing, trigger, transition, render, TransitionService, animate } from '@ngld/transition';
 import { PLUS_ICON_PROVIDER } from '@ngld/icon/plus.icon';
 import { REMOVE_ICON_PROVIDER } from '@ngld/icon/remove.icon';
 import { UNLOCK_ICON_PROVIDER } from '@ngld/icon/unlock.icon';
+import { SvgIconRegistry } from '@ngld/icon';
+import { BehaviorSubject } from 'rxjs';
+import * as rfdc from 'rfdc';
 import { Simulation, forceSimulation, forceCollide, forceManyBody, forceLink, forceCenter, ForceLink } from 'd3-force';
 import { interpolateZoom } from 'd3-interpolate';
 import { SimpleGraph, D3Relationship, D3Node } from './data-interface';
-import { ColorProviderService, ColorGetter, DefaultColorProviderService } from './color-provider.service';
+import { GraphContainer } from './graph.container';
+import { ColorProviderService, DefaultColorProviderService } from './color-provider.service';
 import { ActiveIndividualCastService } from './active-individual-cast.service';
-import { darkenColor, rotatePoint, rotation, unitaryNormalVector, unitaryVector } from './utils';
-import { SvgIconRegistry } from '@ngld/icon';
+import { rotatePoint, rotation, unitaryNormalVector, unitaryVector } from './utils';
 
-type COLOR_HEX = string;
 
-interface ArrowPath {
-  // The Arrow Tail : A vector of A -> B -> C -> D
-  A1: { x: number, y: number };
-  B1: { x: number, y: number };
-  C1: { x: number, y: number };
-  D1: { x: number, y: number };
-  // The Arrow Head: A -> B -> C -> D -> E -> F -> G
-  A2: { x: number, y: number };
-  B2: { x: number, y: number };
-  C2: { x: number, y: number };
-  D2: { x: number, y: number };
-  E2: { x: number, y: number };
-  F2: { x: number, y: number };
-  G2: { x: number, y: number };
-  // The Arrow Overlay
-  A3: { x: number, y: number };
-  B3: { x: number, y: number };
-  C3: { x: number, y: number };
-  D3: { x: number, y: number };
-}
-
-interface CirclePath {
-  // Subpanels in Clockwise
-  //         A1 --- B1
-  //      D1------------C1
-  A1: { x: number, y: number };
-  B1: { x: number, y: number };
-  C1: { x: number, y: number };
-  D1: { x: number, y: number };
-  R1: { inner: number, outer: number };
-}
-
-interface BoxSize {
-  width: number;
-  height: number;
-}
-
-interface D3SVGCalculated<PATH> {
-  translate: { x: number, y: number };
-  // default svg rotation is clockwise
-  rotate: number;
-  pathDrawn: PATH;
-  controlledByDragging: boolean;
-  isLongPressing: boolean;
-  selected: boolean;
-  textTranslate: { x: number, y: number };
-
-  color: {
-    fill: COLOR_HEX;
-    stroke: COLOR_HEX;
-  };
-}
+const clone = rfdc();
 
 const interpolateRadius = interpolateZoom([0, 0, 33], [0, 0, 66]);
 const cosineStart = Math.cos(2 * Math.PI / 180);
@@ -79,7 +30,7 @@ const sineEnd = Math.sin(120 * Math.PI / 180);
     useFactory: () => new TransitionService([
       trigger('openClose', [
         transition((from, to) => from === 'void' && to === 'open', [
-          render<D3Node & D3SVGCalculated<CirclePath>>((p, node) => {
+          render<GraphContainer['nodes'][0]>((p, node) => {
             const radiusOuter = interpolateRadius(p)[2];
             // sin(2) * 33, cos(2) * 33
             node.pathDrawn.A1 = { x: sineStart * 33, y: - cosineStart * 33 };
@@ -94,7 +45,7 @@ const sineEnd = Math.sin(120 * Math.PI / 180);
           animate(200, Easing.easeInCubic),
         ]),
         transition((from, to) => from === 'open' && to === 'void', [
-          render<D3Node & D3SVGCalculated<CirclePath>>((p, node) => {
+          render<GraphContainer['nodes'][0]>((p, node) => {
             const radiusOuter = interpolateRadius(1 - p)[2];
             // sin(2) * 33, cos(2) * 33
             node.pathDrawn.A1 = { x: sineStart * 33, y: - cosineStart * 33 };
@@ -123,26 +74,22 @@ export class LinkedDataGraphicComponent implements OnInit {
   @ViewChild('mainCanvas', { static: true })
   mainCanvas: ElementRef<SVGSVGElement>;
 
-  @Input() set graph(g: SimpleGraph) {
-    this.rawGraph = g;
-    if (this.componentInited) {
-      this.updateGraph();
-    }
-  }
-
   @Input() nodeRadius = 25;
   @Input() arrowSize = 4;
   @Input() minCollision = 60;
   @Input() zoomFit = false;
-  @Input() debug = false;
+  @Input() set debug(state: boolean) {
+    this.$states.debug.next(state);
+  }
+  @Input() set graph(g: SimpleGraph) {
+    this.initGraph = g;
+  }
 
-  d3Graph = {
-    relationships: [] as (
-      D3Relationship & D3SVGCalculated<ArrowPath>
-      & { textBoxSize: BoxSize }
-    )[],
-    nodes: [] as (D3Node & D3SVGCalculated<CirclePath>)[],
+  $states = {
+    debug: new BehaviorSubject(false),
+    // dashedArrow: new BehaviorSubject<{ from: D3Node, to: D3Node }>(null),
   };
+  d3Graph: GraphContainer;
 
   canvasViewBox = {
     minX: 0,
@@ -151,18 +98,16 @@ export class LinkedDataGraphicComponent implements OnInit {
     height: 500,
   };
 
-  simulation: Simulation<D3Node, D3Relationship>;
-  private colorGetter: ColorGetter;
-  private componentInited = false;
-  private rawGraph: SimpleGraph;
+  private simulation: Simulation<D3Node, D3Relationship>;
+  private initGraph: SimpleGraph;
   private initialLoad = true;
-  private selectedNode: D3Node & D3SVGCalculated<CirclePath>;
+  private selectedNode: GraphContainer['nodes'][0];
 
   @Input() highlightChecker = (node: D3Node) => false;
 
   constructor(
     private transitionService: TransitionService,
-    @Optional() private colorProvider: ColorProviderService<LinkedDataGraphicComponent>,
+    @Optional() private colorProvider: ColorProviderService,
     @Optional() public activeIndividual: ActiveIndividualCastService,
   ) {
     if (!this.activeIndividual) {
@@ -171,13 +116,14 @@ export class LinkedDataGraphicComponent implements OnInit {
     if (!this.colorProvider) {
       this.colorProvider = new DefaultColorProviderService();
     }
+    this.d3Graph = new GraphContainer(this.colorProvider);
   }
 
   async ngOnInit(): Promise<void> {
-    this.colorGetter = this.colorProvider.registerComponent(this);
     this.simulation = this.newSimulation();
-    this.componentInited = true;
-    this.updateGraph();
+    this.initGraph.nodes.forEach(node => this.d3Graph.addNode(clone(node)));
+    this.initGraph.relationships.forEach(rel => this.d3Graph.addRelation(clone(rel)));
+    this.reloadSimulation();
     const mainCanvasSize = this.getMainCanvasSize();
     this.canvasViewBox = {
       minX: 0, minY: 0, width: mainCanvasSize.width, height: mainCanvasSize.height,
@@ -210,7 +156,6 @@ export class LinkedDataGraphicComponent implements OnInit {
           const target = rel.target as D3Node;
           const angle = rotation(source, target);
           rel.rotate = rotation(source, rel.target as D3Node);
-          const textPadding = 1;
           // [SOURCE] --textMargin--[TEXT]--textMargin-->[TARGET]
           // [SOURCE] --textMargin--textMargin--[TEXT]-->[TARGET]
           // --textMargin--textMargin--[TEXT]-- = [SOURCE]-->[TARGET]
@@ -300,44 +245,11 @@ export class LinkedDataGraphicComponent implements OnInit {
     return simulation;
   }
 
-  private updateGraph(): void {
-    this.rawGraph.relationships.forEach(rel => {
-      this.d3Graph.relationships.push({
-        translate: { x: 0, y: 0 },
-        rotate: 0, controlledByDragging: false, isLongPressing: false,
-        selected: false, textTranslate: { x: 0, y: 0 },
-        pathDrawn: {
-          A1: { x: 0, y: 0 }, B1: { x: 0, y: 0 }, C1: { x: 0, y: 0 },
-          D1: { x: 0, y: 0 },
-          A2: { x: 0, y: 0 }, B2: { x: 0, y: 0 }, C2: { x: 0, y: 0 },
-          D2: { x: 0, y: 0 }, E2: { x: 0, y: 0 }, F2: { x: 0, y: 0 },
-          G2: { x: 0, y: 0 },
-          A3: { x: 0, y: 0 }, B3: { x: 0, y: 0 }, C3: { x: 0, y: 0 },
-          D3: { x: 0, y: 0 },
-        },
-        color: { fill: '#68bdf6', stroke: '#4984ac' },
-        textBoxSize: { width: 1, height: 1 },
-        ...rel
-      });
-    });
-    this.rawGraph.nodes.forEach(node => {
-      const color = this.colorGetter.nextColorByName(node.labels[0]);
-      this.d3Graph.nodes.push({
-        translate: { x: 0, y: 0 },
-        rotate: 0, controlledByDragging: false, isLongPressing: false,
-        selected: false, textTranslate: { x: 0, y: 0 },
-        pathDrawn: {
-          A1: { x: 0, y: 0 }, B1: { x: 0, y: 0 }, C1: { x: 0, y: 0 },
-          D1: { x: 0, y: 0 }, R1: { inner: 33, outer: 33 },
-        },
-        color: { fill: color, stroke: darkenColor(color).formatHex() },
-        ...node,
-      });
-    });
-    // Update each node's x and y positions
+  private reloadSimulation(): void {
     this.simulation.nodes(this.d3Graph.nodes);
     this.simulation.force<ForceLink<D3Node, D3Relationship>>('link')
       .links(this.d3Graph.relationships);
+    this.simulation.alphaTarget(0).restart();
   }
 
   private zoomSvgScale(): void {
@@ -351,19 +263,24 @@ export class LinkedDataGraphicComponent implements OnInit {
     };
   }
 
-  onNodeDragging(e: CdkDragMove, node: D3Node & D3SVGCalculated<ArrowPath>): void {
+  onNodeDragging(e: CdkDragMove, node: GraphContainer['nodes'][0]): void {
     node.fx = e.pointerPosition.x;
     node.fy = e.pointerPosition.y;
   }
 
-  onNodeDragStart(node: D3Node & D3SVGCalculated<ArrowPath>): void {
+  onNodeDragStart(node: GraphContainer['nodes'][0]): void {
     if (node.controlledByDragging || node.isLongPressing) {
       return;
     }
-    this.simulation.alphaTarget(0.3).restart();
+    this.simulation.alphaTarget(0.1).restart();
   }
 
-  onNodeClick(e: MouseEvent, node: D3Node & D3SVGCalculated<CirclePath>): void {
+  onNodeDragEnd(e: CdkDragEnd, node: GraphContainer['nodes'][0]): void {
+    node.controlledByDragging = true;
+    this.simulation.alphaTarget(0);
+  }
+
+  onNodeClick(e: MouseEvent, node: GraphContainer['nodes'][0]): void {
     if (node.controlledByDragging || node.isLongPressing) {
       node.controlledByDragging = false;
       node.isLongPressing = false;
@@ -394,6 +311,13 @@ export class LinkedDataGraphicComponent implements OnInit {
     this.canvasViewBox.minY = e.minY;
     this.canvasViewBox.width = e.width;
     this.canvasViewBox.height = e.height;
+  }
+
+  onPlusNodeButton(node: GraphContainer['nodes'][0]): void {
+    this.d3Graph.addRelation(
+      { id: 'bankai', type: 'for', source: '1', target: node.id, properties: { from: 1 } },
+    );
+    this.reloadSimulation();
   }
 
 }

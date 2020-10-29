@@ -2280,20 +2280,15 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@types/d3-color@*":
+"@types/d3-color@*", "@types/d3-color@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/d3-color/-/d3-color-2.0.0.tgz#febdfadade56e215a4c3f612fe3000d92999f5d5"
   integrity sha512-Bs0maTeU47rdZT+n42iQ0C4gnbnJlIDJkqHFtIsDx2tPPITDeoSdIrm+00UYXzegzArYC2GsG80eHNMwz08IAw==
 
-"@types/d3-color@^1.2.2":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@types/d3-color/-/d3-color-1.4.1.tgz#0d9746c84dfef28807b2989eed4f37b2575e1f33"
-  integrity sha512-xkPLi+gbgUU9ED6QX4g6jqYL2KCB0/3AlM+ncMGqn49OgH0gFMY/ITGqPF8HwEiLzJaC+2L0I+gNwBgABv1Pvg==
-
-"@types/d3-force@^1.2.1":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@types/d3-force/-/d3-force-1.2.2.tgz#6337a146dbdf2781f5dde5bb491a646fd03d7bc4"
-  integrity sha512-TN7KO7sk0tJauedIt0q20RQRFo4V3v97pJKO/TDK40X3LaPM1aXRM2+zFF+nRMtseEiszg4KffudhjR8a3+4cg==
+"@types/d3-force@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@types/d3-force/-/d3-force-2.1.0.tgz#6a2210f04d02a0862c6b069de91bad904143e7b5"
+  integrity sha512-LGDtC2YADu8OBniq9EBx/MOsXsMcJbEkmfSpXuz6oVdRamB+3CLCiq5EKFPEILGZQckkilGFq1ZTJ7kc289k+Q==
 
 "@types/d3-interpolate@^2.0.0":
   version "2.0.0"
@@ -2407,6 +2402,11 @@
   integrity sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==
   dependencies:
     "@types/node" "*"
+
+"@types/rfdc@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/rfdc/-/rfdc-1.1.0.tgz#1fc5ffdc679575e2ca31399d4ee75f353afdd37b"
+  integrity sha512-Ez0Pc0H6m8C2L3Wif9SR5YlJTB/UnZIq0N9G/dPB2fmGo42oLo95o73hHHtoGvUucMD4OdlquscflSuKCZE8qA==
 
 "@types/selenium-webdriver@^3.0.0":
   version "3.0.17"
