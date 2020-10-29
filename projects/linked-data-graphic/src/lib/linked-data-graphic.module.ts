@@ -6,18 +6,18 @@ import { SvgIconModule } from '@ngld/icon';
 import { LinkedDataGraphicComponent } from './linked-data-graphic.component';
 import { BoxSizeListenerDirective } from './box-size-listener.directive';
 import { LongPressDirective } from './long-press.directive';
-import { InfoPanelComponentComponent } from './info-panel-component/info-panel-component.component';
+import { InfoPanelComponent } from './info-panel-component/info-panel.component';
 
 @NgModule({
   declarations: [
     LinkedDataGraphicComponent,
     BoxSizeListenerDirective,
     LongPressDirective,
-    InfoPanelComponentComponent],
+    InfoPanelComponent],
   imports: [
     BrowserModule, DragDropModule, PanZoomDirectiveModule,
     SvgIconModule
   ],
-  exports: [LinkedDataGraphicComponent, InfoPanelComponentComponent]
+  exports: [LinkedDataGraphicComponent, InfoPanelComponent]
 })
 export class LinkedDataGraphicModule { }

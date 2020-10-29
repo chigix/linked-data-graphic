@@ -53,8 +53,8 @@
       (cdkDragMoved)="onNodeDragging($event, node)"
       (longPressing)="onNodeDragStart(node);node.isLongPressing=true;node.fx=node.x;node.fy=node.y"
       (click)="($states.dashedArrow && $states.dashedArrow.id) ? plusDashedArrow($event) : onNodeClick($event, node)"
-      (mouseenter)="$states.dashedArrow ? updateDashedArrowTarget(node) : activeIndividual.updateActiveIndividual(node)"
-      (mouseleave)="$states.dashedArrow ? updateDashedArrowTarget(null) : activeIndividual.clearActiveIndividual()">
+      (mouseenter)="$states.dashedArrow ? updateDashedArrowTarget(node) : updateActiveIndividual(node)"
+      (mouseleave)="$states.dashedArrow ? updateDashedArrowTarget(null) : clearActiveIndividual()">
       <circle class="ring" [attr.r]="nodeRadius * 1.16">
         <title> {{ node.labels[0] }} [{{node.id}}] </title>
       </circle>

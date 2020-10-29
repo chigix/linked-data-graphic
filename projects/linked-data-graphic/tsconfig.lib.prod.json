@@ -4,7 +4,22 @@
   "compilerOptions": {
     "paths": {
       "@ngld/pan-zoom": [
-        "dist/pan-zoom-directive",
+        "projects/pan-zoom-directive/dist",
+      ],
+      "@ngld/transition": [
+        "projects/transition/dist",
+      ],
+      "@ngld/icon/plus.icon": [
+        "projects/icon/dist/plus.icon",
+      ],
+      "@ngld/icon/remove.icon": [
+        "projects/icon/dist/remove.icon",
+      ],
+      "@ngld/icon/unlock.icon": [
+        "projects/icon/dist/unlock.icon",
+      ],
+      "@ngld/icon": [
+        "projects/icon/dist",
       ]
     }
   },

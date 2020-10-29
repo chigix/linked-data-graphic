@@ -6,12 +6,19 @@
     "umdModuleIds": {
       "d3-force": "d3-force",
       "d3-color": "d3-color",
-      "@ngld/pan-zoom": "@ngld/pan-zoom"
+      "@ngld/pan-zoom": "@ngld/pan-zoom",
+      "@ngld/transition": "@ngld/transition",
+      "@ngld/icon/plus.icon": "@ngld/icon/plus.icon",
+      "@ngld/icon/remove.icon": "@ngld/icon/remove.icon",
+      "@ngld/icon/unlock.icon": "@ngld/icon/unlock.icon",
+      "@ngld/icon": "@ngld/icon"
     }
   },
   "whitelistedNonPeerDependencies": [
     "tslib",
     "d3-.+",
-    "@ngld/pan-zoom"
+    "@ngld/pan-zoom",
+    "@ngld/transition",
+    "@ngld/icon"
   ]
 }

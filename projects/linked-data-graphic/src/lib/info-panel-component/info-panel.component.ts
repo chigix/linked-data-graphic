@@ -4,14 +4,14 @@ import { ColorProviderService } from '../color-provider.service';
 
 @Component({
   selector: 'ngld-info-panel',
-  templateUrl: './info-panel-component.component.html',
-  styleUrls: ['./info-panel-component.component.scss']
+  templateUrl: './info-panel.component.html',
+  styleUrls: ['./info-panel.component.scss']
 })
-export class InfoPanelComponentComponent {
+export class InfoPanelComponent {
 
   constructor(
     public activeIndividual: ActiveIndividualCastService,
-    private colorGetter: ColorProviderService,
+    public colorGetter: ColorProviderService,
   ) { }
 
 }

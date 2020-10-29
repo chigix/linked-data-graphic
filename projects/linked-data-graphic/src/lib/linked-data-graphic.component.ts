@@ -24,10 +24,9 @@ const sineStart = Math.sin(2 * Math.PI / 180);
 const cosineEnd = Math.cos(120 * Math.PI / 180);
 const sineEnd = Math.sin(120 * Math.PI / 180);
 
-@Component({
-  providers: [{
-    provide: TransitionService,
-    useFactory: () => new TransitionService([
+export class AnimationTranstion extends TransitionService {
+  constructor() {
+    super([
       trigger('openClose', [
         transition((from, to) => from === 'void' && to === 'open', [
           render<GraphContainer['nodes'][0]>((p, node) => {
@@ -60,7 +59,14 @@ const sineEnd = Math.sin(120 * Math.PI / 180);
           animate(200, Easing.easeOutCubic),
         ]),
       ]),
-    ]),
+    ]);
+  }
+}
+
+@Component({
+  providers: [{
+    provide: TransitionService,
+    useClass: AnimationTranstion,
   }
     , [PLUS_ICON_PROVIDER, REMOVE_ICON_PROVIDER, UNLOCK_ICON_PROVIDER]
     , SvgIconRegistry
@@ -351,6 +357,14 @@ export class LinkedDataGraphicComponent implements OnInit {
   plusDashedArrow(ev: MouseEvent): void {
     ev.preventDefault();
     this.$states.dashedArrow = null;
+  }
+
+  updateActiveIndividual(node: GraphContainer['nodes'][0]): void {
+    this.activeIndividual.updateActiveIndividual(node);
+  }
+
+  clearActiveIndividual(): void {
+    this.activeIndividual.clearActiveIndividual();
   }
 
   onViewBoxChanged(e: {
