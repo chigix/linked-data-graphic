@@ -5,7 +5,7 @@
                   + ' ' + canvasViewBox.height"
     [viewBox]="canvasViewBox"
     (click)="clearDashedArrow($event)"
-    (viewBoxChanged)="onViewBoxChanged($event)">
+    (viewBoxChanged)="updateViewBox($event)">
   <g class="relationships">
     <g *ngFor="let rel of d3Graph.relationships" class="relationship"
       [attr.transform]="'translate(' + rel.source.x + ',' + rel.source.y

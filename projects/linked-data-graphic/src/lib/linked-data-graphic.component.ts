@@ -366,6 +366,14 @@ export class LinkedDataGraphicComponent implements OnInit {
     this.$states.dashedArrow = null;
   }
 
+  /**
+   * TODO: Should be moved into a service
+   */
+  addNode(node: D3Node): void {
+    this.d3Graph.addNode(node);
+    this.reloadSimulation();
+  }
+
   updateActiveIndividual(node: GraphContainer['nodes'][0]): void {
     this.activeIndividual.updateActiveIndividual(node);
   }
@@ -374,7 +382,7 @@ export class LinkedDataGraphicComponent implements OnInit {
     this.activeIndividual.clearActiveIndividual();
   }
 
-  onViewBoxChanged(e: {
+  updateViewBox(e: {
     minX: number, minY: number, width: number, height: number,
   }): void {
     this.canvasViewBox.minX = e.minX;
