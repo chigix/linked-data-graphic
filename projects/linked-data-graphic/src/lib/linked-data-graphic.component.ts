@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, Optional } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Optional, Output, EventEmitter } from '@angular/core';
 import { CdkDragEnd, CdkDragMove } from '@angular/cdk/drag-drop';
 import { Easing, trigger, transition, render, TransitionService, animate } from '@ngld/transition';
 import { PLUS_ICON_PROVIDER } from '@ngld/icon/plus.icon';
@@ -93,6 +93,8 @@ export class LinkedDataGraphicComponent implements OnInit {
   @Input() set relationRemove(state: boolean) {
     this.$states.relationRemove = state;
   }
+
+  @Output() graphUpdated: EventEmitter<SimpleGraph>;
 
   $states = {
     debug: false,
@@ -351,6 +353,7 @@ export class LinkedDataGraphicComponent implements OnInit {
         source, target: to.id, properties: { from: 1 }
       });
       this.reloadSimulation();
+      this.graphUpdated.emit(this.d3Graph);
     }
   }
 
@@ -383,6 +386,7 @@ export class LinkedDataGraphicComponent implements OnInit {
   removeRelation(ev: MouseEvent, rel: GraphContainer['relationships'][0]): void {
     ev.preventDefault();
     this.d3Graph.removeRelationById(rel.id);
+    this.graphUpdated.emit(this.d3Graph);
     this.reloadSimulation();
   }
 

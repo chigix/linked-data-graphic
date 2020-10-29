@@ -6,6 +6,8 @@
     "umdModuleIds": {
       "d3-force": "d3-force",
       "d3-color": "d3-color",
+      "nanoid": "nanoid",
+      "rfdc": "rfdc",
       "@ngld/pan-zoom": "@ngld/pan-zoom",
       "@ngld/transition": "@ngld/transition",
       "@ngld/icon/plus.icon": "@ngld/icon/plus.icon",
@@ -16,6 +18,8 @@
   },
   "whitelistedNonPeerDependencies": [
     "tslib",
+    "nanoid",
+    "rfdc",
     "d3-.+",
     "@ngld/pan-zoom",
     "@ngld/transition",
