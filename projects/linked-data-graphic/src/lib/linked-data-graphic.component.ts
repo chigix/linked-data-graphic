@@ -94,7 +94,7 @@ export class LinkedDataGraphicComponent implements OnInit {
     this.$states.relationRemove = state;
   }
 
-  @Output() graphUpdated: EventEmitter<SimpleGraph>;
+  @Output() graphUpdated = new EventEmitter<SimpleGraph>();
 
   $states = {
     debug: false,
