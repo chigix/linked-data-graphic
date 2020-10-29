@@ -1,6 +1,6 @@
 {
   "name": "@ngld/icon",
-  "version": "0.0.1",
+  "version": "1.0.0-alpha.0",
   "scripts": {
     "build": "ng build --prod icon"
   },

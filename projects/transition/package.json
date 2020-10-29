@@ -1,6 +1,6 @@
 {
   "name": "@ngld/transition",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "build": "ng build --prod transition"
