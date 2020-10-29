@@ -90,10 +90,14 @@ export class LinkedDataGraphicComponent implements OnInit {
   @Input() set graph(g: SimpleGraph) {
     this.initGraph = g;
   }
+  @Input() set relationRemove(state: boolean) {
+    this.$states.relationRemove = state;
+  }
 
   $states = {
     debug: false,
     dashedArrow: null as { from: D3Node, to: D3Node, id?: string },
+    relationRemove: false,
   };
   d3Graph: GraphContainer;
 
@@ -374,6 +378,12 @@ export class LinkedDataGraphicComponent implements OnInit {
     this.canvasViewBox.minY = e.minY;
     this.canvasViewBox.width = e.width;
     this.canvasViewBox.height = e.height;
+  }
+
+  removeRelation(ev: MouseEvent, rel: GraphContainer['relationships'][0]): void {
+    ev.preventDefault();
+    this.d3Graph.removeRelationById(rel.id);
+    this.reloadSimulation();
   }
 
 }

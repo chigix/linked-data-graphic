@@ -45,7 +45,7 @@ export class PanZoomDirective implements OnInit, OnDestroy {
     minX: 0, minY: 0, width: 500, height: 500,
   };
 
-  @Input() scaleFactor = 1.01;
+  @Input() scaleFactor = 1.3;
 
   @Output() viewBoxChanged = new EventEmitter<{
     minX: number, minY: number, width: number, height: number,

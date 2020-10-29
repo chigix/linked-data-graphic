@@ -9,7 +9,8 @@
   <g class="relationships">
     <g *ngFor="let rel of d3Graph.relationships" class="relationship"
       [attr.transform]="'translate(' + rel.source.x + ',' + rel.source.y
-                        +') rotate(' + rel.rotate + ')'">
+                        +') rotate(' + rel.rotate + ')'"
+      (click)="$states.relationRemove ? removeRelation($event, rel) : null">
       <text ngldBoxSizeListener [listenValue]="rel.pathDrawn.A1.x"
         (boxSize)="rel.textBoxSize=$event"
         class="text" fill="#000000" font-size="8px" pointer-events="none"

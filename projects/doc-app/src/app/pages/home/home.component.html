@@ -3,8 +3,12 @@
 <p class="mat-body-strong">Linked Data Graphic and Visualization Components
   for Angular</p>
 
+<button mat-stroked-button *ngIf="!$states.ldData.editMode"
+  (click)="$states.ldData.editMode = true"> No Edit </button>
+<button mat-raised-button color="primary" *ngIf="$states.ldData.editMode"
+(click)="$states.ldData.editMode = false"> Editing </button>
 <div style="height: 400px">
-  <ngld-canvas [graph]="ldData" [zoomFit]="true"></ngld-canvas>
+  <ngld-canvas [graph]="ldData" [zoomFit]="true" [relationRemove]="$states.ldData.editMode"></ngld-canvas>
 </div>
 <ngld-info-panel></ngld-info-panel>
 

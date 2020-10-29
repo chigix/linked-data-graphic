@@ -18,6 +18,12 @@ export class HomeComponent {
   @ViewChild(LinkedDataGraphicComponent)
   ldCanvas: LinkedDataGraphicComponent;
 
+  $states = {
+    ldData: {
+      editMode: false,
+    },
+  };
+
   ldData: SimpleGraph = {
     nodes: [
       { labels: ['8階へ戻る'], id: '1', properties: {} },
