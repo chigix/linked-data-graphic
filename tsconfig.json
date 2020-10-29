@@ -34,6 +34,9 @@
       "@ngld/icon/remove.icon": [
         "projects/icon/remove.icon/src/public_api"
       ],
+      "@ngld/icon/plus.icon": [
+        "projects/icon/plus.icon/src/public_api"
+      ],
       "@ngld/icon/unlock.icon": [
         "projects/icon/unlock.icon/src/public_api"
       ]

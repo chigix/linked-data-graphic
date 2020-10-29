@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Optional } from '@angular/core';
 import { CdkDragMove } from '@angular/cdk/drag-drop';
 import { Easing, trigger, transition, render, TransitionService, animate } from '@ngld/transition';
-import { EXPAND_ICON_PROVIDER } from '@ngld/icon/expand.icon';
+import { PLUS_ICON_PROVIDER } from '@ngld/icon/plus.icon';
 import { REMOVE_ICON_PROVIDER } from '@ngld/icon/remove.icon';
 import { UNLOCK_ICON_PROVIDER } from '@ngld/icon/unlock.icon';
 import { Simulation, forceSimulation, forceCollide, forceManyBody, forceLink, forceCenter, ForceLink } from 'd3-force';
@@ -111,7 +111,7 @@ const sineEnd = Math.sin(120 * Math.PI / 180);
       ]),
     ]),
   }
-    , [EXPAND_ICON_PROVIDER, REMOVE_ICON_PROVIDER, UNLOCK_ICON_PROVIDER]
+    , [PLUS_ICON_PROVIDER, REMOVE_ICON_PROVIDER, UNLOCK_ICON_PROVIDER]
     , SvgIconRegistry
   ],
   selector: 'ngld-canvas',

@@ -72,7 +72,7 @@
                     + ' Z'"></path>
         <g ngld-icon svgIcon="unlock_node" transform="translate(-52,-30) scale(0.7)" color="#2A2C34"></g>
         <g ngld-icon svgIcon="remove_node" transform="translate(33,-24) scale(0.7)" color="#2A2C34"></g>
-        <g ngld-icon svgIcon="expand_node" transform="translate(-8,38) scale(0.7)" color="#2A2C34"></g>
+        <g ngld-icon svgIcon="plus_node" transform="translate(-8,38) scale(0.7)" color="#2A2C34"></g>
       </ng-container>
     </g>
   </g>
