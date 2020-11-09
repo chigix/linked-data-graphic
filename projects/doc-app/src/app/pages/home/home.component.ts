@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import {
   LinkedDataGraphicComponent, SimpleGraph,
   ColorProviderService, DefaultColorProviderService,
-  ActiveIndividualCastService,
+  ActiveIndividualStoreService,
 } from '@ngld/canvas';
 import { SimulationNodeDatum } from 'd3-force';
 
@@ -11,7 +11,7 @@ import { SimulationNodeDatum } from 'd3-force';
   templateUrl: './home.component.html',
   providers: [
     { provide: ColorProviderService, useClass: DefaultColorProviderService },
-    ActiveIndividualCastService],
+    ActiveIndividualStoreService],
 })
 export class HomeComponent {
 

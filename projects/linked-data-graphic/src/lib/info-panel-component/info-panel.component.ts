@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActiveIndividualCastService } from '../active-individual-cast.service';
+import { ActiveIndividualStoreService } from '../active-individual-store.service';
 import { ColorProviderService } from '../color-provider.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { ColorProviderService } from '../color-provider.service';
 export class InfoPanelComponent {
 
   constructor(
-    public activeIndividual: ActiveIndividualCastService,
+    public activeIndividualStore: ActiveIndividualStoreService,
     public colorGetter: ColorProviderService,
   ) { }
 

@@ -1,4 +1,4 @@
-<div *ngIf="activeIndividual.observeActiveIndividual() | async as active;">
+<div *ngIf="activeIndividualStore.activeIndividual$ | async as active;">
   <ng-container *ngTemplateOutlet="infoPanel; context: {data: active}"></ng-container>
 </div>
 

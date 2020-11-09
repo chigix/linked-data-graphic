@@ -12,7 +12,7 @@ import { interpolateZoom } from 'd3-interpolate';
 import { SimpleGraph, D3Relationship, D3Node } from './data-interface';
 import { GraphContainer } from './graph.container';
 import { ColorProviderService, DefaultColorProviderService } from './color-provider.service';
-import { ActiveIndividualCastService } from './active-individual-cast.service';
+import { ActiveIndividualStoreService } from './active-individual-store.service';
 import { rotatePoint, rotation, unitaryNormalVector, unitaryVector } from './utils';
 
 
@@ -120,10 +120,10 @@ export class LinkedDataGraphicComponent implements OnInit {
   constructor(
     private transitionService: TransitionService,
     @Optional() private colorProvider: ColorProviderService,
-    @Optional() private activeIndividual: ActiveIndividualCastService,
+    @Optional() private activeIndividualStore: ActiveIndividualStoreService,
   ) {
-    if (!this.activeIndividual) {
-      this.activeIndividual = new ActiveIndividualCastService();
+    if (!this.activeIndividualStore) {
+      this.activeIndividualStore = new ActiveIndividualStoreService();
     }
     if (!this.colorProvider) {
       this.colorProvider = new DefaultColorProviderService();
@@ -375,11 +375,11 @@ export class LinkedDataGraphicComponent implements OnInit {
   }
 
   updateActiveIndividual(node: GraphContainer['nodes'][0]): void {
-    this.activeIndividual.updateActiveIndividual(node);
+    this.activeIndividualStore.activeIndividual = node;
   }
 
   clearActiveIndividual(): void {
-    this.activeIndividual.clearActiveIndividual();
+    this.activeIndividualStore.clearActiveIndividual();
   }
 
   updateViewBox(e: {
