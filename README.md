@@ -1,8 +1,12 @@
-# Linked Data Graphic
+# ![Linked Data Graphic](https://raw.githubusercontent.com/chigix/linked-data-graphic/master/projects/doc-app/src/assets/repository-open-graph.png)
 
 An Angular Module to have a Linked Data Visualization similar to neo4j.
 
-![preview](https://raw.githubusercontent.com/chigix/linked-data-graphic/master/projects/doc-app/src/assets/repository-open-graph.png)
+[![@ngld/canvas](https://img.shields.io/npm/v/@ngld/canvas.svg?logo=npm&logoColor=fff&label=@ngld/canvas&color=limegreen)](https://www.npmjs.com/package/@ngld/canvas)
+[![@ngld/icon](https://img.shields.io/npm/v/@ngld/icon.svg?logo=npm&logoColor=fff&label=@ngld/icon&color=limegreen)](https://www.npmjs.com/package/@ngld/icon)
+[![@ngld/pan-zoom](https://img.shields.io/npm/v/@ngld/pan-zoom.svg?logo=npm&logoColor=fff&label=@ngld/pan-zoom&color=limegreen)](https://www.npmjs.com/package/@ngld/pan-zoom)
+[![@ngld/transition](https://img.shields.io/npm/v/@ngld/transition.svg?logo=npm&logoColor=fff&label=@ngld/transition&color=limegreen)](https://www.npmjs.com/package/@ngld/transition)
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
 ## Features
 
