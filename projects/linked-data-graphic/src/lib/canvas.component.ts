@@ -73,7 +73,7 @@ export class AnimationTranstion extends TransitionService {
   ],
   selector: 'ngld-canvas',
   templateUrl: './canvas.component.svg',
-  styleUrls: ['./component.scss'],
+  styleUrls: ['./canvas.scss'],
 })
 export class LinkedDataGraphicComponent implements OnInit {
 

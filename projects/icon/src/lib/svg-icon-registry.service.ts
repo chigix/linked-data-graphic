@@ -23,30 +23,52 @@ interface SvgIconMap {
   };
 }
 
+/**
+ * An exception to be thrown when the consumer attempts to use `<ngld-icon>`
+ * without including @angular/common/http.
+ */
+export class SvgIconNoHttpProviderError extends Error {
+
+  constructor() {
+    super('Could not find HttpClient provider for use with Angular Material icons.'
+      + 'Please include the HttpClientModule from @angular/common/http in your '
+      + 'app imports.');
+  }
+}
+
 const DEFAULT_NS = '$$default';
 
 /**
  * https://github.com/angular/angular/blob/f8096d499324cf0961f092944bbaedd05364eea1/aio/src/app/shared/custom-icon-registry.ts
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SvgIconRegistry extends MatIconRegistry {
 
   private cachedSvgElements: SvgIconMap = { [DEFAULT_NS]: {} };
 
   constructor(
-    http: HttpClient,
+    @Optional() private http: HttpClient,
     sanitizer: DomSanitizer,
     @Optional() @Inject(DOCUMENT) document: any,
     errorHandler: ErrorHandler,
-    @Inject(SVG_ICONS) private svgIcons: SvgIconInfo[],
+    @Optional() @Inject(SVG_ICONS) private svgIcons: SvgIconInfo[],
   ) {
     super(http, sanitizer, document, errorHandler);
+    if (svgIcons == null) {
+      this.svgIcons = [];
+    }
   }
 
   /**
-   * getNamedSvgIcon
+   * Returns an Observable that produces the icon (as an `<svg>` DOM element)
+   * with the given name and namespace.
+   * The icon must have been previously registered with addIcon or addIconSet;
+   * if not, the observable will throw an error.
    */
   public getNamedSvgIcon(iconName: string, namespace?: string): Observable<SVGElement> {
+    if (!this.http) {
+      throw new SvgIconNoHttpProviderError();
+    }
     const nsIconMap = this.cachedSvgElements[namespace || DEFAULT_NS];
     let preloadedElement: SVGElement | undefined = nsIconMap && nsIconMap[iconName];
     if (!preloadedElement) {

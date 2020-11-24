@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { PanZoomDirectiveModule } from '@ngld/pan-zoom';
 import { SvgIconModule } from '@ngld/icon';
-import { LinkedDataGraphicComponent } from './linked-data-graphic.component';
+import { LinkedDataGraphicComponent } from './canvas.component';
 import { BoxSizeListenerDirective } from './box-size-listener.directive';
 import { LongPressDirective } from './long-press.directive';
 import { InfoPanelComponent } from './info-panel-component/info-panel.component';

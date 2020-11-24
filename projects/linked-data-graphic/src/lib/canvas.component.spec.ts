@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { LinkedDataGraphicComponent } from './linked-data-graphic.component';
+import { LinkedDataGraphicComponent } from './canvas.component';
 
 describe('LinkedDataGraphicComponent', () => {
   let component: LinkedDataGraphicComponent;

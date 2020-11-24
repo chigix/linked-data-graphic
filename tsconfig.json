@@ -39,6 +39,9 @@
       ],
       "@ngld/icon/unlock.icon": [
         "projects/icon/unlock.icon/src/public_api"
+      ],
+      "@test/*": [
+        "projects/test/*"
       ]
     }
   }
