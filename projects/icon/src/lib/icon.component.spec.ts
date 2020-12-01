@@ -174,7 +174,7 @@ describe('ngld-icon without HttpClientModule', () => {
     })
   );
 
-  it('should through an error when trying to load a remote icon', () => {
+  it('should throw an error when trying to load a remote icon', () => {
     expect(() => {
       iconRegistry.addSvgIcon('fido', sanitizer.bypassSecurityTrustResourceUrl('dog.svg'));
 

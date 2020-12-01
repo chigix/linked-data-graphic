@@ -15,7 +15,6 @@ import { ColorProviderService, DefaultColorProviderService } from './color-provi
 import { ActiveIndividualStoreService } from './active-individual-store.service';
 import { rotatePoint, rotation, unitaryNormalVector, unitaryVector } from './utils';
 
-
 const clone = rfdc();
 
 const interpolateRadius = interpolateZoom([0, 0, 33], [0, 0, 66]);
@@ -64,12 +63,10 @@ export class AnimationTranstion extends TransitionService {
 }
 
 @Component({
-  providers: [{
-    provide: TransitionService,
-    useClass: AnimationTranstion,
-  }
-    , [PLUS_ICON_PROVIDER, REMOVE_ICON_PROVIDER, UNLOCK_ICON_PROVIDER]
-    , SvgIconRegistry
+  providers: [
+    { provide: TransitionService, useClass: AnimationTranstion, },
+    [PLUS_ICON_PROVIDER, REMOVE_ICON_PROVIDER, UNLOCK_ICON_PROVIDER],
+    SvgIconRegistry
   ],
   selector: 'ngld-canvas',
   templateUrl: './canvas.component.svg',
