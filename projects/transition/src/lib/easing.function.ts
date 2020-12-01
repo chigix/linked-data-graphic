@@ -1,3 +1,5 @@
+export type EasingFunc = (t: number) => number;
+
 /**
  * No easing, no acceleration
  */
