@@ -1,6 +1,6 @@
 {
   "name": "@ngld/canvas",
-  "version": "1.1.1-beta.1",
+  "version": "1.1.1-beta.2",
   "description": "Linked Data Graphic Component for Angular",
   "peerDependencies": {
     "@angular/cdk": "^11",
@@ -12,9 +12,9 @@
     "build": "ng build --prod linked-data-graphic"
   },
   "dependencies": {
-    "@ngld/icon": "^1.0.0-alpha.1",
-    "@ngld/pan-zoom": "^1.0.4",
-    "@ngld/transition": "^1.0.2",
+    "@ngld/icon": "^1.0.0-alpha.2",
+    "@ngld/pan-zoom": "^1.0.5",
+    "@ngld/transition": "^1.0.3",
     "d3-color": "^2.0.0",
     "d3-force": "^2.1.1",
     "d3-interpolate": "^2.0.1",
