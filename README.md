@@ -42,7 +42,7 @@ conforming to D3's [node](https://github.com/d3/d3-force#simulation_nodes) and
 [links](https://github.com/d3/d3-force#link_links) structure.
 
 ```html
-<ngld-canvas [graph]="ldData" [zoomFit]="true"></ngld-canvas>
+<ngld-canvas [graph]="{ nodes, relationships }" [zoomFit]="true"></ngld-canvas>
 ```
 
 ## Story
