@@ -22,7 +22,8 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         // RouterTestingModule
-        RouterModule.forRoot(routes), NoopAnimationsModule,
+        RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
+        NoopAnimationsModule,
         MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule,
         MatListModule,
         LinkedDataGraphicModule,
