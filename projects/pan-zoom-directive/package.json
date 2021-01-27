@@ -6,8 +6,8 @@
     "build": "ng build --prod pan-zoom-directive"
   },
   "peerDependencies": {
-    "@angular/common": "^10.1.5",
-    "@angular/core": "^10.1.5"
+    "@angular/common": "^11",
+    "@angular/core": "^11"
   },
   "dependencies": {
     "tslib": "^2.0.0"

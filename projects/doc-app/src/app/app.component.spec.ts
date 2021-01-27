@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NavigationComponent } from './modules/navigation/navigation.component';
-import { LinkedDataGraphicModule } from 'linked-data-graphic';
+import { LinkedDataGraphicModule } from '@ngld/canvas';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';

@@ -5,9 +5,9 @@
     "build": "ng build --prod icon"
   },
   "peerDependencies": {
-    "@angular/common": "^10.1.6",
-    "@angular/core": "^10.1.6",
-    "@angular/material": "^10.1.6"
+    "@angular/common": "^11",
+    "@angular/core": "^11",
+    "@angular/material": "^11"
   },
   "dependencies": {
     "tslib": "^2.0.0"
