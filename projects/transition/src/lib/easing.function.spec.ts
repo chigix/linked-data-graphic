@@ -76,7 +76,7 @@ describe('EasingFunctions', () => {
     it('should be symetrical', () => {
       repeat(100)(() => {
         [easing.linear].forEach(f => {
-          const sym = x => 1 - f(1 - x);
+          const sym = (x: number) => 1 - f(1 - x);
           allEquals(f, sym, 100);
         });
       });
