@@ -3,15 +3,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { ColorProviderService } from './color-provider.service';
 
-@Component({
-  selector: 'ngld-graphic',
-  templateUrl: './canvas.component.svg',
-  styleUrls: ['./component.scss'],
-})
-export class DummyComponent { }
-
 describe('ColorProviderService', () => {
-  let service: ColorProviderService<DummyComponent>;
+  let service: ColorProviderService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
@@ -22,3 +15,10 @@ describe('ColorProviderService', () => {
     expect(service).toBeTruthy();
   });
 });
+
+@Component({
+  selector: 'ngld-graphic',
+  templateUrl: './canvas.component.svg',
+  styleUrls: ['./canvas.scss'],
+})
+export class DummyComponent { }
