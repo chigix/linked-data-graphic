@@ -1,4 +1,5 @@
 // Adds the code typography styles extension, based on a config.
+@use '~@angular/material' as mat;
 @mixin mat-code-typography($config, $selector: '.mat-typography') {
   $code-font: "Verdana", "Droid Sans Mono", monospace;
   .mat-code, #{$selector} code {
@@ -19,6 +20,6 @@
     padding: .1em;
     border-radius: .3em;
     white-space: normal;
-    color: mat-color($primary, darker);
+    color: mat.get-color-from-palette($primary, darker);
   }
 }

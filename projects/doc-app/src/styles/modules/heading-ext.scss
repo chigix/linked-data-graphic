@@ -1,10 +1,11 @@
+@use '~@angular/material' as mat;
 @mixin mat-heading-typography($config, $selector: '.mat-typography') {
   #{$selector} {
     h1, h2, h3, h4, h5, h6 {
 
       .header-link {
         // color: mat-color($mat-grey);
-        color: map_get($mat-grey, 500);
+        color: map_get(mat.$grey-palette, 500);
         margin: 0 4px;
         text-decoration: none;
         user-select: none;
