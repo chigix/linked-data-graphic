@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, Optional, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Optional, Output, EventEmitter, Injectable } from '@angular/core';
 import { CdkDragEnd, CdkDragMove } from '@angular/cdk/drag-drop';
 import { Easing, trigger, transition, render, TransitionService, animate } from '@ngld/transition';
 import { PLUS_ICON_PROVIDER } from '@ngld/icon/plus.icon';
@@ -23,6 +23,7 @@ const sineStart = Math.sin(2 * Math.PI / 180);
 const cosineEnd = Math.cos(120 * Math.PI / 180);
 const sineEnd = Math.sin(120 * Math.PI / 180);
 
+@Injectable()
 export class AnimationTranstion extends TransitionService {
   constructor() {
     super([
