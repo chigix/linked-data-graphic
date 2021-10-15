@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" *ngIf="!(isHandset$ | async)">
+<mat-toolbar color="primary" *ngIf="(isHandset$ | async) === false">
   <h1>Linked Data Graphic Component</h1>
   <span class="fill-remaining-space"></span>
   <a mat-button href="https://github.com/chigix/linked-data-graphic"
@@ -13,7 +13,7 @@
   <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
     [fixedTopGap]="(isHandset$ | async) ? 0 : 64"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar *ngIf="isHandset$ | async">Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item [routerLink]="['/data-protocol']" routerLinkActive="active">About</a>

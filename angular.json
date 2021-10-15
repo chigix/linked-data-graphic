@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "yarn"
+    "packageManager": "yarn",
+    "defaultCollection": "@angular-eslint/schematics"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -108,15 +109,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/doc-app/tsconfig.app.json",
-              "projects/doc-app/tsconfig.spec.json",
-              "projects/doc-app/e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/doc-app/**/*.ts",
+              "projects/doc-app/**/*.html"
             ]
           }
         },
@@ -161,14 +158,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/linked-data-graphic/tsconfig.lib.json",
-              "projects/linked-data-graphic/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/linked-data-graphic/**/*.ts",
+              "projects/linked-data-graphic/**/*.html"
             ]
           }
         }
@@ -201,14 +195,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/pan-zoom-directive/tsconfig.lib.json",
-              "projects/pan-zoom-directive/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/pan-zoom-directive/**/*.ts",
+              "projects/pan-zoom-directive/**/*.html"
             ]
           }
         }
@@ -241,14 +232,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/transition/tsconfig.lib.json",
-              "projects/transition/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/transition/**/*.ts",
+              "projects/transition/**/*.html"
             ]
           }
         }
@@ -281,18 +269,16 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/icon/tsconfig.lib.json",
-              "projects/icon/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/icon/**/*.ts",
+              "projects/icon/**/*.html"
             ]
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "doc-app"
 }

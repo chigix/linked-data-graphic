@@ -35,7 +35,7 @@ const funcIriPattern = /^url\(['"]?#(.*?)['"]?\)$/;
   selector: 'g[ngld-icon]',
   template: '<svg><text> Empty Icon </text></svg>',
 })
-export class IconComponent implements OnInit, OnChanges, OnDestroy {
+export class IconComponent implements OnChanges, OnDestroy {
 
   @Input() svgIcon: string;
 
@@ -63,8 +63,6 @@ export class IconComponent implements OnInit, OnChanges, OnDestroy {
       elementRef.nativeElement.setAttribute('aria-hidden', 'true');
     }
   }
-
-  ngOnInit(): void { }
 
   /**
    * the value given on svgIcon property is obtained from SimpleChanges event.
