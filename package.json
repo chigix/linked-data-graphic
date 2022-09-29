@@ -51,7 +51,7 @@
     "@types/rfdc": "^1.1.0",
     "@typescript-eslint/eslint-plugin": "4.28.2",
     "@typescript-eslint/parser": "4.28.2",
-    "d3-color": "^2.0.0",
+    "d3-color": "^3.1.0",
     "d3-force": "^2.1.1",
     "eslint": "^7.26.0",
     "firebase-tools": "^9.20.0",
