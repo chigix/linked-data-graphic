@@ -15,7 +15,7 @@
     "@ngld/icon": "^1.0.1",
     "@ngld/pan-zoom": "^1.0.7",
     "@ngld/transition": "^1.0.5",
-    "d3-color": "^2.0.0",
+    "d3-color": "^3.1.0",
     "d3-force": "^2.1.1",
     "d3-interpolate": "^2.0.1",
     "nanoid": "^3.1.16",
